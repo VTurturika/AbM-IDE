@@ -8,19 +8,8 @@ public class Test {
 
     public static void main(String args[]) {
 
-        SimpleFileParser parser = new SimpleMarkovFileParser("e:/program.txt");
-        Program program = parser.getProgram();
-
-        MarkovConfiguration configuration = new MarkovConfiguration("|||");
-
-        Interpreter interpreter = new MarkovInterpreter();
-
-        interpreter.setInput(configuration);
-        interpreter.loadProgram(program);
-
-        interpreter.runProgram();
-
-        System.out.println(configuration);
+        Alphabet alphabet = new Alphabet("{'#', '|'}");
+        System.out.println(alphabet);
     }
 
     public void readFromFile() {

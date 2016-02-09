@@ -62,12 +62,6 @@ abstract public class SimpleFileParser {
         strings.add(str);
     }
 
-    protected void fillProgram() {
-
-        program.clearProgram();
-
-    }
-
     public Program getProgram() {
 
         if(strings.isEmpty()) {
