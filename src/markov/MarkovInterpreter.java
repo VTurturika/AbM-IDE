@@ -41,7 +41,7 @@ public class MarkovInterpreter extends Interpreter {
 
         MarkovCommand command = (MarkovCommand) c.getInstance();
 
-        markovString.replace( command.getPattern(), command.getReplacer() );
+        markovString.replace( command.getPattern(), command.getReplacement() );
 
         if( command.isFinishCommand() ) {
             hasFinishCommand = true;

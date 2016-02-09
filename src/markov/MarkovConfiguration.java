@@ -22,13 +22,13 @@ public class MarkovConfiguration extends Configuration {
         this.markovString = markovString;
     }
 
-    public void replace(String pattern, String replacer) {
+    public void replace(String pattern, String replacement) {
 
         if(pattern.equals("")){
-            markovString = replacer + markovString;
+            markovString = replacement + markovString;
         }
         else {
-            markovString = markovString.replace(pattern, replacer);
+            markovString = markovString.replace(pattern, replacement);
         }
     }
 

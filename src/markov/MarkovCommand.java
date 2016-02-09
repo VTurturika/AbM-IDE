@@ -5,17 +5,17 @@ import interpreter.*;
 public class MarkovCommand extends Command {
 
     private String pattern;
-    private String replacer;
+    private String replacement;
     private boolean isFinishCommand;
 
-    public MarkovCommand(String pattern, String replacer, boolean isFinishCommand) {
+    public MarkovCommand(String pattern, String replacement, boolean isFinishCommand) {
         this.pattern = pattern;
-        this.replacer = replacer;
+        this.replacement = replacement;
         this.isFinishCommand = isFinishCommand;
     }
 
-    public MarkovCommand(String pattern, String replacer) {
-        this(pattern,replacer, false);
+    public MarkovCommand(String pattern, String replacement) {
+        this(pattern,replacement, false);
     }
 
     public MarkovCommand() {
@@ -30,12 +30,12 @@ public class MarkovCommand extends Command {
         this.pattern = pattern;
     }
 
-    public String getReplacer() {
-        return replacer;
+    public String getReplacement() {
+        return replacement;
     }
 
-    public void setReplacer(String replacer) {
-        this.replacer = replacer;
+    public void setReplacement(String replacement) {
+        this.replacement = replacement;
     }
 
     public boolean isFinishCommand() {
@@ -52,7 +52,7 @@ public class MarkovCommand extends Command {
 
         result += getPattern().equals("") ? "$" : getPattern();
         result += " " + (isFinishCommand() ? "->." : "->") + " ";
-        result += getReplacer().equals("") ? "$" : getReplacer();
+        result += getReplacement().equals("") ? "$" : getReplacement();
 
         return result;
     }
