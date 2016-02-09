@@ -41,7 +41,7 @@ public class MarkovInterpreter extends Interpreter {
 
         MarkovCommand command = (MarkovCommand) c.getInstance();
 
-        markovString.replace( command.getPattern(), command.getReplacement() );
+        markovString.setString( replace(command.getPattern(),command.getReplacement()) );
 
         if( command.isFinishCommand() ) {
             hasFinishCommand = true;
@@ -55,5 +55,24 @@ public class MarkovInterpreter extends Interpreter {
     @Override
     public void setInput(Configuration input) {
         markovString = (MarkovConfiguration) input.getInstance();
+    }
+
+    private String replace(String pattern, String replacement) {
+
+        String regexPattern = "";
+        for (int i = 0; i < pattern.length(); i++) {
+
+            if( isMetaSymbol(pattern.charAt(i)) ) {
+                regexPattern += "\\";
+            }
+            regexPattern += pattern.charAt(i);
+        }
+
+        return markovString.getString().replaceFirst(regexPattern, replacement);
+    }
+
+    private boolean isMetaSymbol(char c) {
+
+        return ( ".\\|()[]{}$^+*?".indexOf(c) != -1 );
     }
 }

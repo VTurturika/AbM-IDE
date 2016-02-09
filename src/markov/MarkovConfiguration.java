@@ -34,6 +34,6 @@ public class MarkovConfiguration extends Configuration {
 
     @Override
     public String toString() {
-        return getString();
+        return getString() +  " [" + getString().length() + "]";
     }
 }

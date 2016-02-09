@@ -8,7 +8,7 @@ abstract public class Interpreter {
     public void runProgram() {
 
         currentCommand = getFirstCommand();
-       while( !isStop() ) {
+        while (!isStop()) {
 
             execute(currentCommand);
             currentCommand = nextCommand();
@@ -19,7 +19,7 @@ abstract public class Interpreter {
         this.program = program;
     }
 
-//    abstract public void setFirstCommand(CommandIndex c);
+    //    abstract public void setFirstCommand(CommandIndex c);
     abstract public void setInput(Configuration input);
 
     private boolean isStop() {
@@ -27,6 +27,8 @@ abstract public class Interpreter {
     }
 
     abstract protected Command getFirstCommand();
+
     abstract protected Command nextCommand();
+
     abstract protected void execute(Command c);
 }
