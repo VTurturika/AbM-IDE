@@ -7,9 +7,7 @@ import markov.MarkovProgram;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Turturika on 29.01.2016.
- */
+
 public class SimpleMarkovFileParser extends SimpleFileParser {
 
     public SimpleMarkovFileParser(String filename) {
@@ -26,7 +24,7 @@ public class SimpleMarkovFileParser extends SimpleFileParser {
 
             String pattern = createPartOfCommand(matcher.group(1));
             String replacer = createPartOfCommand(matcher.group(3));
-            boolean isFinishCommand = matcher.group(2) != null;
+            boolean isFinishCommand = ( matcher.group(2) != null );
 
             return new MarkovCommand(pattern, replacer, isFinishCommand);
         }

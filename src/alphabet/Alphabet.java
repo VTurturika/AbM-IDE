@@ -1,20 +1,19 @@
-package interpreter;
+package alphabet;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Alphabet {
+public class Alphabet implements Iterable<Character> {
 
     private Set<Character> alphabet;
     private char emptySymbol;
-    private boolean useEmptySymbol;
 
     public Alphabet(String set) {
         this.alphabet = new HashSet<>();
         this.emptySymbol = '$';
-        this.useEmptySymbol = true;
         alphabet.add(emptySymbol);
         parseString(set);
     }
@@ -68,5 +67,21 @@ public class Alphabet {
         result += "[" + alphabet.size() + "]";
 
         return result;
+    }
+
+    @Override
+    public Iterator<Character> iterator() {
+        return alphabet.iterator();
+    }
+
+    public boolean containSet(Alphabet a) {
+
+        for(Character c : a) {
+
+            if(!alphabet.contains(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

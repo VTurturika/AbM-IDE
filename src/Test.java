@@ -3,16 +3,19 @@ import URM.*;
 import turing.*;
 import markov.*;
 import parsers.*;
+import alphabet.*;
 
 public class Test {
 
     public static void main(String args[]) {
 
-        Alphabet alphabet = new Alphabet("{'#', '|'}");
-        System.out.println(alphabet);
+        Alphabet a = new Alphabet("{'a', 'b', 'c'}");
+        Alphabet b = new Alphabet("{'a', 'b'}");
+
+        System.out.println(a.containSet(b));
     }
 
-    public void readFromFile() {
+    public void testTuringInterpreter() {
 
         SimpleFileParser parser = new SimpleTuringFileParser();
         parser.setFilename("e:/program.txt");
@@ -24,6 +27,24 @@ public class Test {
         configuration.setHeadToSymbol('|');
 
         Interpreter interpreter = new TuringInterpreter();
+        interpreter.setInput(configuration);
+        interpreter.loadProgram(program);
+
+        interpreter.runProgram();
+
+        System.out.println(configuration);
+    }
+
+    public void testMarkovInterpreter() {
+
+        SimpleFileParser fileParser = new SimpleMarkovFileParser("e:/program.txt");
+        Program program = fileParser.getProgram();
+
+        MarkovConfiguration configuration= new MarkovConfiguration();
+        configuration.setString("||#|||");
+
+        Interpreter interpreter = new MarkovInterpreter();
+
         interpreter.setInput(configuration);
         interpreter.loadProgram(program);
 
