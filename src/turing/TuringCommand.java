@@ -51,6 +51,14 @@ public class TuringCommand extends Command {
         this.before = before;
     }
 
+    public void setStateBefore(int stateBefore) {
+        before.setState(stateBefore);
+    }
+
+    public void setSymbolBefore(char symbolBefore) {
+        before.setSymbol(symbolBefore);
+    }
+
     @Override
     public String toString() {
 

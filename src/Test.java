@@ -5,6 +5,8 @@ import markov.*;
 import parsers.*;
 import alphabet.*;
 
+import java.util.Iterator;
+
 public class Test {
 
     public static void main(String args[]) {
@@ -32,7 +34,7 @@ public class Test {
 
         interpreter.runProgram();
 
-        System.out.println(configuration);
+        System.out.println(configuration);    
     }
 
     public void testMarkovInterpreter() {

@@ -2,6 +2,7 @@ package URM;
 
 import interpreter.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class UrmProgram implements Program {
 
@@ -40,5 +41,23 @@ public class UrmProgram implements Program {
             result += (i+1) + ") " + program.get(i) + "\n";
         }
         return result;
+    }
+
+    @Override
+    public Iterator<Command> iterator() {
+        return new Iterator<Command>() {
+
+            private Iterator<UrmCommand> iter = program.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return iter.hasNext();
+            }
+
+            @Override
+            public Command next() {
+                return iter.next();
+            }
+        };
     }
 }
