@@ -84,4 +84,26 @@ public class Alphabet implements Iterable<Character> {
         }
         return true;
     }
+
+    public String getSymbolPattern() {
+
+        String result = "[";
+
+        for(Character c : alphabet) {
+            if("-^[]&|{}".indexOf(c) != -1) {
+                result += "\\";
+            }
+            result += c;
+        }
+
+        return result + "]";
+    }
+
+    public String getNonEmptyStringPattern() {
+        return getSymbolPattern() + "+";
+    }
+
+    public String getStringPattern() {
+        return getSymbolPattern() + "*";
+    }
 }
