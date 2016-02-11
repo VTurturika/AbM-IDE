@@ -2,6 +2,7 @@ package markov;
 
 import interpreter.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,5 +53,23 @@ public class MarkovProgram implements Program {
         }
 
         return result;
+    }
+
+    @Override
+    public Iterator<Command> iterator() {
+        return new Iterator<Command>() {
+
+            private Iterator<MarkovCommand> iter = program.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return iter.hasNext();
+            }
+
+            @Override
+            public Command next() {
+                return iter.next();
+            }
+        };
     }
 }

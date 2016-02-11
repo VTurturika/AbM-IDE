@@ -4,23 +4,24 @@ import turing.*;
 import markov.*;
 import parsers.*;
 
+import java.util.Iterator;
+
 public class Test {
 
     public static void main(String args[]) {
 
-        SimpleFileParser parser = new SimpleMarkovFileParser("e:/program.txt");
+        SimpleFileParser parser = new SimpleTuringFileParser("e:/program.txt");
         Program program = parser.getProgram();
 
-        MarkovConfiguration configuration = new MarkovConfiguration("|||");
+        for(Iterator<Command> i = program.iterator(); i.hasNext();) {
+            TuringCommand turingCommand = (TuringCommand) i.next().getInstance();
+            turingCommand.setDirection(Direction.RIGHT);
+        }
 
-        Interpreter interpreter = new MarkovInterpreter();
+        for(Command c : program) {
+            System.out.println(c);
+        }
 
-        interpreter.setInput(configuration);
-        interpreter.loadProgram(program);
-
-        interpreter.runProgram();
-
-        System.out.println(configuration);
     }
 
     public void readFromFile() {
