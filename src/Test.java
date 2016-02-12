@@ -6,12 +6,20 @@ import parsers.*;
 import alphabet.*;
 
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Test {
 
     public static void main(String args[]) {
 
-        testMarkovInterpreter();
+        String[] testStrings = {"T", "I", "O", "T diff I", "{'1', '2'} union {'3'}", "{'t'} & T"};
+
+        for(String test : testStrings) {
+            System.out.println("String: " + test);
+            SetParser.isValidSet(test);
+            System.out.println();
+        }
     }
 
     public static void testTuringInterpreter() {
