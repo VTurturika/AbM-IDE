@@ -11,19 +11,26 @@ public class Alphabet implements Iterable<Character> {
     private Set<Character> alphabet;
     private char emptySymbol;
 
-    public Alphabet(String set) {
+    public Alphabet() {
         this.alphabet = new HashSet<>();
         this.emptySymbol = '$';
         alphabet.add(emptySymbol);
-        parseString(set);
     }
 
     public void addSymbol(char c) {
-        alphabet.add(c);
+        if(!contains(c)) {
+            alphabet.add(c);
+        }
+    }
+
+    public boolean contains(char c) {
+        return alphabet.contains(c);
     }
 
     public void deleteSymbol(char c) {
-        alphabet.remove(c);
+        if(contains(c)) {
+            alphabet.remove(c);
+        }
     }
 
     public boolean elementOf(char c) {
@@ -36,24 +43,6 @@ public class Alphabet implements Iterable<Character> {
 
     public void setEmptySymbol(char emptySymbol) {
         this.emptySymbol = emptySymbol;
-    }
-
-    private void parseString(String str) {
-
-        Pattern pattern = Pattern.compile("\\{\\s?(('(\\S)'(,\\s?'(\\S)')*)|\\s?)\\s?\\}");
-        Matcher matcher = pattern.matcher(str);
-        if(matcher.find()) {
-            if(matcher.group(2).length() == 0) {  // str == {\s?}
-                return;
-            }
-            str = str.substring(1, str.length()-1);
-            str = str.replaceAll("\\s+", "").replace("'", "").replaceAll(",", " ");
-            String[] elements = str.split("\\s");
-
-            for(String s : elements) {
-                alphabet.add(s.charAt(0));
-            }
-        }
     }
 
     @Override

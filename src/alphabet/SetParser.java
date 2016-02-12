@@ -23,32 +23,58 @@ public class SetParser {
                          String.format("(((?<leftSet>%1$s)\\s%2$s\\s(?<rightSet>%1$s))|(?<singleSet>%1$s))",
                                          nonEmptySet, setOperation);
 
-    public static boolean isValidSet(String stringSet) {
+    public boolean isValidSet(String stringSet) {
+
+        return Pattern.compile(alphabetSet).matcher(stringSet).find();
+    }
+
+    public Alphabet createAlphabet(String stringSet) {
 
         Pattern pattern = Pattern.compile(alphabetSet);
         Matcher matcher = pattern.matcher(stringSet);
 
-        if(matcher.find()) {
+        if( matcher.find() ) {
 
-            String[] matchedGroups = new String[4];
-            matchedGroups[0] = "singleSet: " + ( matcher.group("singleSet") != null ? matcher.group("singleSet") : "<empty>");
-            matchedGroups[1] = "leftSet: " + (matcher.group("leftSet") != null ? matcher.group("leftSet") : "<empty>");
-            matchedGroups[2] = "rightSet: " + (matcher.group("rightSet") != null ? matcher.group("rightSet") : "<empty>");
-            matchedGroups[3] = "opertion: " + (matcher.group("operation") != null ? matcher.group("operation") : "<empty>");
-
-            for(String group : matchedGroups) {
-                System.out.println(group);
+            stringSet = matcher.group(0).replaceAll("\\s", "");
+            if( matcher.group("singleSet") != null ) {   //single set definition
+                return parseSingleSet(stringSet);
             }
+        }
 
-            return true;
+        return null;
+    }
+
+    private Alphabet parseSingleSet(String singleSet) {
+
+        if(isPredefinedSet(singleSet)) {
+            //do something interesting
+            return null;
         }
         else {
-            System.out.println("Invalid string");
-            return false;
+            singleSet = singleSet.substring(1, singleSet.length()-1); // erase {}
+
+            singleSet = singleSet.replace("'","")            //erase '
+                                 .replace(",{3}",",comma,")  //save comma symbol within setString
+                                 .replace(",$", "comma");    //save comma symbol in the end of setString
+
+            String[] symbols = singleSet.split(",");
+
+            Alphabet result = new Alphabet();
+
+            for(String s : symbols) {
+                if(s.equals("comma")) {
+                    result.addSymbol(',');
+                }
+                else {
+                    result.addSymbol(s.charAt(0));
+                }
+            }
+
+            return result;
         }
     }
 
-    public static Alphabet createAlphabet(String stringSet) {
-        return null;
+    private boolean isPredefinedSet(String stringSet) {
+        return Pattern.compile(predefinedSet).matcher(stringSet).find();
     }
 }

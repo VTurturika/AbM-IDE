@@ -13,13 +13,10 @@ public class Test {
 
     public static void main(String args[]) {
 
-        String[] testStrings = {"T", "I", "O", "T diff I", "{'1', '2'} union {'3'}", "{'t'} & T"};
+        SetParser setParser = new SetParser();
+        Alphabet alphabet = setParser.createAlphabet("{'1', '2', '3'}");
+        System.out.println(alphabet);
 
-        for(String test : testStrings) {
-            System.out.println("String: " + test);
-            SetParser.isValidSet(test);
-            System.out.println();
-        }
     }
 
     public static void testTuringInterpreter() {
