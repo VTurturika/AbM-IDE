@@ -11,13 +11,10 @@ public class Test {
 
     public static void main(String args[]) {
 
-        Alphabet a = new Alphabet("{'a', 'b', 'c'}");
-        Alphabet b = new Alphabet("{'a', 'b'}");
-
-        System.out.println(a.containSet(b));
+        testMarkovInterpreter();
     }
 
-    public void testTuringInterpreter() {
+    public static void testTuringInterpreter() {
 
         SimpleFileParser parser = new SimpleTuringFileParser();
         parser.setFilename("e:/program.txt");
@@ -37,13 +34,13 @@ public class Test {
         System.out.println(configuration);    
     }
 
-    public void testMarkovInterpreter() {
+    public static void testMarkovInterpreter() {
 
         SimpleFileParser fileParser = new SimpleMarkovFileParser("e:/program.txt");
         Program program = fileParser.getProgram();
 
         MarkovConfiguration configuration= new MarkovConfiguration();
-        configuration.setString("||#|||");
+        configuration.setString("|||");
 
         Interpreter interpreter = new MarkovInterpreter();
 

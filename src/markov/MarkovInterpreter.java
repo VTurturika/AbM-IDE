@@ -7,33 +7,36 @@ import interpreter.StopCommand;
 
 public class MarkovInterpreter extends Interpreter {
 
-    private MarkovCommandIndex index;
     private MarkovConfiguration markovString;
     private boolean hasFinishCommand;
 
-
     public MarkovInterpreter() {
-        this.index = new MarkovCommandIndex();
-        this.markovString = new MarkovConfiguration();
+
+        this.markovString = null;
         this.hasFinishCommand = false;
     }
 
     @Override
     protected Command getFirstCommand() {
 
-        if(markovString != null) {
-            index.setPattern(markovString.getString());
-            return program.getCommand(index);
-        }
-        else {
-            return new StopCommand();
-        }
+        return ( markovString == null ) ? new StopCommand() : nextCommand();
     }
 
     @Override
     protected Command nextCommand() {
 
-        return (!hasFinishCommand) ? program.getCommand(index) : new StopCommand();
+        if(hasFinishCommand) {
+            return new StopCommand();
+        }
+
+        for(Command c : program) {
+            MarkovCommand command = (MarkovCommand) c.getInstance();
+            if( markovString.getString().contains(command.getPattern()) ) {
+                return c;
+            }
+        }
+
+        return new StopCommand();
     }
 
     @Override
@@ -41,15 +44,11 @@ public class MarkovInterpreter extends Interpreter {
 
         MarkovCommand command = (MarkovCommand) c.getInstance();
 
-        markovString.setString( replace(command.getPattern(),command.getReplacement()) );
+        markovString.setString( replace( command.getPattern(), command.getReplacement() ) );
 
-        if( command.isFinishCommand() ) {
+        if(command.isFinishCommand()) {
             hasFinishCommand = true;
         }
-        else {
-            index.setPattern(markovString.getString());
-        }
-
     }
 
     @Override

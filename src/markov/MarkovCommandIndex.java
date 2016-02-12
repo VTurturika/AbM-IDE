@@ -4,32 +4,27 @@ import interpreter.*;
 
 public class MarkovCommandIndex extends CommandIndex {
 
-    private String pattern;
+    private int index;
 
-    public MarkovCommandIndex(String pattern) {
-        this.pattern = pattern;
+    public MarkovCommandIndex(int index) {
+        this.index = index;
     }
 
     public MarkovCommandIndex() {
-        this("");
+        this(0);
     }
 
     @Override
     public void setIndex(CommandIndex c) {
         MarkovCommandIndex commandIndex = (MarkovCommandIndex) c.getIndexInstance();
-        setPattern( commandIndex.getPattern() );
+        setIndex( commandIndex.getIndex() );
     }
 
-    public String getPattern() {
-        return pattern;
+    public int getIndex() {
+        return index;
     }
 
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
-    @Override
-    public String toString() {
-        return getPattern();
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

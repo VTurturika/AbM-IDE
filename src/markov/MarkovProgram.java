@@ -30,14 +30,11 @@ public class MarkovProgram implements Program {
 
         MarkovCommandIndex commandIndex = (MarkovCommandIndex) index.getIndexInstance();
 
-        for(MarkovCommand c: program) {
-
-            if( commandIndex.getPattern().contains(c.getPattern()) ) {
-                return c;
-            }
+        if(commandIndex.getIndex() >= program.size() || commandIndex.getIndex() < 0) {
+            return new StopCommand();
         }
 
-        return new StopCommand();
+        return  program.get(commandIndex.getIndex());
     }
 
     @Override
@@ -103,6 +100,7 @@ public class MarkovProgram implements Program {
 
     public boolean hasOutputAlphabet() {
         return (outputAlphabet != null);
+    }
 
     @Override
     public Iterator<Command> iterator() {

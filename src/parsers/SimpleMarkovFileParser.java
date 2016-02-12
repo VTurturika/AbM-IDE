@@ -23,10 +23,10 @@ public class SimpleMarkovFileParser extends SimpleFileParser {
         if(matcher.find()) {
 
             String pattern = createPartOfCommand(matcher.group(1));
-            String replacer = createPartOfCommand(matcher.group(3));
+            String replacement = createPartOfCommand(matcher.group(3));
             boolean isFinishCommand = ( matcher.group(2) != null );
 
-            return new MarkovCommand(pattern, replacer, isFinishCommand);
+            return new MarkovCommand(pattern, replacement, isFinishCommand);
         }
         else {
             throw new IllegalArgumentException("Error of parsing command");
