@@ -1,22 +1,17 @@
 import interpreter.*;
-import URM.*;
 import turing.*;
 import markov.*;
 import parsers.*;
 import alphabet.*;
 
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Test {
 
     public static void main(String args[]) {
 
-        SetParser setParser = new SetParser();
+        TemplateParser parser = new TemplateParser();
         try {
-            Alphabet alphabet = setParser.createAlphabet("{'1'} diff {'1'}");
-            System.out.println(alphabet);
+            TemplateSymbol templateSymbol = parser.CreateTemplateSymbol("|#x -> #xx : x in {'|'} ");
+            System.out.println(templateSymbol);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

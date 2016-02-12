@@ -3,10 +3,10 @@ package alphabet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SetParser {
+public class TemplateParser {
 
-    private static final String templateSymbol = "(\\w)";
-    private static final String elementOf = "((in)|(∈))";
+    private static final String templateSymbol = "(?<template>\\w)";
+    private static final String elementOf = "(?<elementOf>(in)|(∈))";
 
     private static final String union = "((union)|(or)|(OR)|(\\|)|(∪))";
     private static final String intersection = "((intersect)|(and)|(AND)|(&)|(∩))";
@@ -23,6 +23,10 @@ public class SetParser {
                          String.format("(((?<leftSet>%1$s)\\s%2$s\\s(?<rightSet>%1$s))|(?<singleSet>%1$s))",
                                          nonEmptySet, setOperation);
 
+    private static final String templateDefinition =
+                                String.format(":\\s?%1$s\\s?%2$s\\s?(?<set>%3$s)",
+                                              templateSymbol,elementOf, alphabetSet);
+
     public boolean isValidSet(String stringSet) {
 
         return Pattern.compile(alphabetSet).matcher(stringSet).find();
@@ -36,7 +40,7 @@ public class SetParser {
         if( matcher.find() ) {
 
             if( matcher.group("singleSet") != null ) {   //single set definition
-                return parseSingleSet(stringSet);
+                return parseSingleSet(matcher.group("singleSet"));
             }
             else { // definition like this: "<Set> <Operation> <Set>"
                 Alphabet leftSet  = parseSingleSet(matcher.group("leftSet"));
@@ -110,6 +114,26 @@ public class SetParser {
         }
         else {
             return "wrongOperation";
+        }
+    }
+
+    public TemplateSymbol CreateTemplateSymbol(String definition) throws Exception {
+
+        Pattern pattern = Pattern.compile(templateDefinition);
+        Matcher matcher = pattern.matcher(definition);
+
+        if(matcher.find()) {
+
+            try {
+                return new TemplateSymbol(matcher.group("template").charAt(0),createAlphabet(definition));
+            }
+            catch (Exception e) {
+                throw new Exception(e.getMessage());
+            }
+
+        }
+        else {
+            throw new Exception();
         }
     }
 }

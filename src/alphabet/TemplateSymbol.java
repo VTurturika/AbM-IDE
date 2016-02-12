@@ -1,6 +1,4 @@
-package markov;
-
-import alphabet.Alphabet;
+package alphabet;
 
 public class TemplateSymbol {
 
@@ -40,5 +38,13 @@ public class TemplateSymbol {
 
     public boolean isTemplateString() {
         return isTemplateString;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Alias: " + getAlias() + "\n" +
+               "Alphabet: " + getAlphabet() + "\n" +
+               "isTemplateString: " + isTemplateString() + "\n";
     }
 }

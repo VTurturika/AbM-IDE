@@ -1,5 +1,6 @@
 package markov;
 
+import alphabet.TemplateSymbol;
 import interpreter.*;
 
 import java.util.ArrayList;
