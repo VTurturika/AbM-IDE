@@ -28,23 +28,43 @@ public class SetParser {
         return Pattern.compile(alphabetSet).matcher(stringSet).find();
     }
 
-    public Alphabet createAlphabet(String stringSet) {
+    public Alphabet createAlphabet(String stringSet) throws Exception {
 
         Pattern pattern = Pattern.compile(alphabetSet);
         Matcher matcher = pattern.matcher(stringSet);
 
         if( matcher.find() ) {
 
-            stringSet = matcher.group(0).replaceAll("\\s", "");
             if( matcher.group("singleSet") != null ) {   //single set definition
                 return parseSingleSet(stringSet);
             }
-        }
+            else { // definition like this: "<Set> <Operation> <Set>"
+                Alphabet leftSet  = parseSingleSet(matcher.group("leftSet"));
+                Alphabet rightSet = parseSingleSet(matcher.group("rightSet"));
 
-        return null;
+                try {
+                    switch (getSetOperation(matcher.group("operation"))) {
+                        case "union":
+                            return leftSet.union(rightSet);
+                        case "intersection":
+                            return leftSet.intersection(rightSet);
+                        case "difference":
+                            return leftSet.difference(rightSet);
+                        default:
+                            throw new UnsupportedOperationException("Wrong operation");
+                    }
+                }
+                catch (Exception e) {
+                    throw new Exception("Set Operation Exception: " + e.getMessage());
+                }
+            }
+        }
+        throw new Exception();
     }
 
     private Alphabet parseSingleSet(String singleSet) {
+
+        singleSet = singleSet.replaceAll("\\s", "");
 
         if(isPredefinedSet(singleSet)) {
             //do something interesting
@@ -76,5 +96,20 @@ public class SetParser {
 
     private boolean isPredefinedSet(String stringSet) {
         return Pattern.compile(predefinedSet).matcher(stringSet).find();
+    }
+
+    private String getSetOperation(String setOperation) {
+        if (setOperation.matches(union)) {
+            return "union";
+        }
+        else if (setOperation.matches(intersection)) {
+            return "intersection";
+        }
+        else if (setOperation.matches(difference)) {
+            return "difference";
+        }
+        else {
+            return "wrongOperation";
+        }
     }
 }

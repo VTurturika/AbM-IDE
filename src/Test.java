@@ -14,9 +14,13 @@ public class Test {
     public static void main(String args[]) {
 
         SetParser setParser = new SetParser();
-        Alphabet alphabet = setParser.createAlphabet("{'1', '2', '3'}");
-        System.out.println(alphabet);
-
+        try {
+            Alphabet alphabet = setParser.createAlphabet("{'1'} diff {'1'}");
+            System.out.println(alphabet);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void testTuringInterpreter() {

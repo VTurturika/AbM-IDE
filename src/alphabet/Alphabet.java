@@ -1,5 +1,6 @@
 package alphabet;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,10 +12,17 @@ public class Alphabet implements Iterable<Character> {
     private Set<Character> alphabet;
     private char emptySymbol;
 
+
+    public Alphabet(Set<Character> alphabet) {
+        this.alphabet = alphabet;
+        this.emptySymbol = '$';
+        addSymbol(emptySymbol);
+    }
+
     public Alphabet() {
         this.alphabet = new HashSet<>();
         this.emptySymbol = '$';
-        alphabet.add(emptySymbol);
+        addSymbol(emptySymbol);
     }
 
     public void addSymbol(char c) {
@@ -23,17 +31,13 @@ public class Alphabet implements Iterable<Character> {
         }
     }
 
-    public boolean contains(char c) {
-        return alphabet.contains(c);
-    }
-
     public void deleteSymbol(char c) {
         if(contains(c)) {
             alphabet.remove(c);
         }
     }
 
-    public boolean elementOf(char c) {
+    public boolean contains(char c) {
         return alphabet.contains(c);
     }
 
@@ -65,13 +69,7 @@ public class Alphabet implements Iterable<Character> {
 
     public boolean containSet(Alphabet a) {
 
-        for(Character c : a) {
-
-            if(!alphabet.contains(c)) {
-                return false;
-            }
-        }
-        return true;
+        return alphabet.containsAll(a.getCharactersSet());
     }
 
     public String getSymbolPattern() {
@@ -94,5 +92,41 @@ public class Alphabet implements Iterable<Character> {
 
     public String getStringPattern() {
         return getSymbolPattern() + "*";
+    }
+
+    public Alphabet union(Alphabet a) {
+
+        Set<Character> temp = new HashSet<>(alphabet);
+        temp.addAll(a.getCharactersSet());
+        return new Alphabet(temp);
+    }
+    public Alphabet intersection(Alphabet a) {
+
+        Set<Character> temp = new HashSet<>(alphabet);
+        temp.retainAll(a.getCharactersSet());
+
+        if(temp.isEmpty()) {
+            throw new IllegalArgumentException("Wrong result of intersection");
+        }
+        else {
+            return new Alphabet(temp);
+        }
+    }
+
+    public Alphabet difference(Alphabet a) {
+
+        Set<Character> temp = new HashSet<>(alphabet);
+        temp.removeAll(a.getCharactersSet());
+
+        if(temp.isEmpty()) {
+            throw new IllegalArgumentException("Wrong result of difference");
+        }
+        else {
+            return new Alphabet(temp);
+        }
+    }
+
+    public Set<Character> getCharactersSet() {
+        return Collections.unmodifiableSet(alphabet);
     }
 }
