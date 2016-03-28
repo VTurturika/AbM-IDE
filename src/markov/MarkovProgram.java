@@ -38,7 +38,7 @@ public class MarkovProgram implements Program {
     }
 
     @Override
-    public int getCommandNumber() {
+    public int getNumberOfCommands() {
         return program.size();
     }
 

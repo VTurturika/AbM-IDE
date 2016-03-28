@@ -34,7 +34,7 @@ public class UrmInterpreter extends Interpreter {
         }
         hasNextCommand = false;
 
-        if(index.getIndex() >= program.getCommandNumber() ) {
+        if(index.getIndex() >= program.getNumberOfCommands() ) {
             return new StopCommand();
         }
         else {

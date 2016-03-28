@@ -12,7 +12,6 @@ public class Alphabet implements Iterable<Character> {
     private Set<Character> alphabet;
     private char emptySymbol;
 
-
     public Alphabet(Set<Character> alphabet) {
         this.alphabet = alphabet;
         this.emptySymbol = '$';

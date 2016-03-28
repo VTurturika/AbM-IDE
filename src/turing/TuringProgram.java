@@ -34,7 +34,7 @@ public class TuringProgram implements Program {
     }
 
     @Override
-    public int getCommandNumber() {
+    public int getNumberOfCommands() {
         return program.size();
     }
 
