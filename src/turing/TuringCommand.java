@@ -2,12 +2,17 @@ package turing;
 
 import interpreter.*;
 
+/**
+ * Implements command for Turing Machine
+ */
 public class TuringCommand extends Command {
 
+    /**saves result part of command*/
     private int stateAfter;
     private char symbolAfter;
     private Direction direction;
 
+    /**saves input part of commmand*/
     private TuringCommandIndex before;
 
     public TuringCommand(int stateBefore, char symbolBefore, int stateAfter, char symbolAfter, Direction direction) {

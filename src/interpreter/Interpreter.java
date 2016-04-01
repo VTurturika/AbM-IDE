@@ -60,5 +60,9 @@ abstract public class Interpreter {
      */
     abstract protected Command nextCommand();
 
+    /**
+     * Execute specified {@code Command} by {@code Interpreter}
+     * @param c {@code Command} that will be executed
+     */
     abstract protected void execute(Command c);
 }

@@ -3,8 +3,12 @@ package URM;
 import interpreter.*;
 import java.util.ArrayList;
 
+/**
+ * Represents states of URM's registers
+ */
 public class UrmConfiguration extends Configuration {
 
+    /**Saves values of registers*/
     private ArrayList<Integer> registers;
 
     public UrmConfiguration(int size) {
@@ -20,19 +24,40 @@ public class UrmConfiguration extends Configuration {
         this(0);
     }
 
+    /**
+     * Returns value of specified register
+     *
+     * @param index zero-based index of needed register
+     * @return value of specified register
+     */
     public int getRegister(int index) {
         return registers.get(index);
     }
 
+    /**
+     * Sets value of specified register
+     * @param index zero-based index of needed register
+     * @param value value that will be assigned
+     */
     public void setRegister(int index, int value) {
         registers.set(index, value);
     }
 
+    /**
+     * Gets value of registers as array of integer
+     *
+     * @return registers value as array of integer
+     */
     public int[] getRegisters() {
 
         return registers.stream().mapToInt(i -> i).toArray();
     }
 
+    /**
+     *  Sets values of registers
+     *
+     * @param values values of registers that will be set
+     */
     public void setRegisters(int[] values) {
 
         registers.clear();
@@ -43,7 +68,7 @@ public class UrmConfiguration extends Configuration {
 
     }
 
-    public int getNumberRegisters() {
+    public int getNumberOfRegisters() {
         return registers.size();
     }
 

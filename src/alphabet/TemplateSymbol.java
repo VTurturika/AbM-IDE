@@ -1,9 +1,15 @@
 package alphabet;
 
+/**
+ * Represents "template symbol" for Markov Algorithms command
+ */
 public class TemplateSymbol {
 
+    /**Alias of template symbol*/
     private char alias;
+    /**Alphabet that includes this template symbol*/
     private Alphabet alphabet;
+    /**Shows that template symbol means string from Alphabet*/
     private boolean isTemplateString;
 
     public TemplateSymbol(char alias, Alphabet alphabet, boolean isTemplateString) {

@@ -2,9 +2,14 @@ package URM;
 
 import interpreter.Command;
 
+/**
+ * Implements command for URM
+ */
 public class UrmCommand extends Command {
 
+    /** type of command (available values are z, s, t, j)*/
     private String type;
+    /** arguments of command */
     private int firstArgument;
     private int secondArgument;
     private int thirdArgument;

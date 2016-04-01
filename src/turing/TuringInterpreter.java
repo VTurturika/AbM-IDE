@@ -2,10 +2,13 @@ package turing;
 
 import interpreter.*;
 
+/**
+ * Implements Turing Machine
+ */
 public class TuringInterpreter extends Interpreter {
 
     private TuringCommandIndex index;
-    private TuringConfiguration tapeState;
+    private TuringConfiguration tapeState; //state of input tape
     private int currentState;
 
     public TuringInterpreter() {
@@ -15,11 +18,13 @@ public class TuringInterpreter extends Interpreter {
         this.currentState = 0;
     }
 
+    /**{@inheritDoc}*/
     @Override
     public void setInput(Configuration input) {
         this.tapeState = (TuringConfiguration) input.getInstance();
     }
 
+    /**{@inheritDoc}*/
     @Override
     protected Command getFirstCommand() {
 
@@ -34,6 +39,7 @@ public class TuringInterpreter extends Interpreter {
         }
     }
 
+    /**{@inheritDoc}*/
     @Override
     protected Command nextCommand() {
 
@@ -49,6 +55,7 @@ public class TuringInterpreter extends Interpreter {
         }
     }
 
+    /**{@inheritDoc}*/
     @Override
     protected void execute(Command c) {
 
