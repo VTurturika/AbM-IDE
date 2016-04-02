@@ -10,7 +10,7 @@ public class Test {
 
         TemplateParser parser = new TemplateParser();
         try {
-            TemplateSymbol templateSymbol = parser.CreateTemplateSymbol("|#x -> #xx : x in {'|'} ");
+            TemplateSymbol templateSymbol = parser.createTemplateSymbol("|#x -> #xx : x in {'|'} ");
             System.out.println(templateSymbol);
         }
         catch (Exception e) {

@@ -162,7 +162,7 @@ public class TemplateParser {
      * @return {@code TemplateSymbol} from string of set's definition
      * @throws Exception if the string of set's definition is invalid
      */
-    public TemplateSymbol CreateTemplateSymbol(String definition) throws Exception {
+    public TemplateSymbol createTemplateSymbol(String definition) throws Exception {
 
         Pattern pattern = Pattern.compile(templateDefinition);
         Matcher matcher = pattern.matcher(definition);

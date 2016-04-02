@@ -22,6 +22,10 @@ public class Alphabet implements Iterable<Character> {
         this.emptySymbol = '$';
         addSymbol(emptySymbol);
     }
+    public Alphabet(char[] symbols) {
+        this();
+        addSymbols(symbols);
+    }
 
     public Alphabet() {
         this.alphabet = new HashSet<>();
@@ -38,6 +42,25 @@ public class Alphabet implements Iterable<Character> {
         if(!contains(c)) {
             alphabet.add(c);
         }
+    }
+
+    /**
+     * Adds array of chars to{@code Alphabet}
+     *
+     * @param symbols array of chars that will be added
+     */
+    public void addSymbols(char[] symbols) {
+        for(char c : symbols) {
+            addSymbol(c);
+        }
+    }
+
+    /**
+     * Clears {@code Alphabet}
+     */
+    public void clear() {
+        alphabet.clear();
+        addSymbol(emptySymbol);
     }
 
     /**
@@ -194,7 +217,7 @@ public class Alphabet implements Iterable<Character> {
         temp.removeAll(a.getCharactersSet());
 
         if(temp.isEmpty()) {
-            throw new IllegalArgumentException("Wrong result of difference");
+            return new Alphabet();
         }
         else {
             return new Alphabet(temp);
