@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="45b551ca-b101-4b3f-995c-c550c9d6a3f6" name="Default" comment="Added JUnit4 tests for Alphabet and TemplateParser classes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/alphabet/AlphabetMatchers.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/alphabet/AlphabetTest.java" />
+    <list default="true" id="45b551ca-b101-4b3f-995c-c550c9d6a3f6" name="Default" comment="Added EmptySymbol class, improved TemplateSymbol and Alphabet classes">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/alphabet/EmptySymbol.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/alphabet/Alphabet.java" afterPath="$PROJECT_DIR$/src/alphabet/Alphabet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/alphabet/TemplateParser.java" afterPath="$PROJECT_DIR$/src/alphabet/TemplateParser.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/parsers/TemplateParserTest.java" afterPath="$PROJECT_DIR$/test/alphabet/TemplateParserTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/alphabet/TemplateSymbol.java" afterPath="$PROJECT_DIR$/src/alphabet/TemplateSymbol.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/alphabet/AlphabetMatchers.java" afterPath="$PROJECT_DIR$/test/alphabet/AlphabetMatchers.java" />
     </list>
     <ignored path="Interpreter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,12 +49,66 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TemplateParserTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TemplateParserTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/alphabet/TemplateParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemplateSymbol.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/alphabet/TemplateSymbol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding>
+                <element signature="e#2135#2136#0" expanded="true" />
+                <element signature="e#2204#2205#0" expanded="true" />
+                <element signature="e#2656#2657#0" expanded="true" />
+                <element signature="e#2683#2684#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmptySymbol.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/alphabet/EmptySymbol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+              <folding>
+                <element signature="e#184#185#0" expanded="true" />
+                <element signature="e#212#213#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Alphabet.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/alphabet/Alphabet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemplateParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/alphabet/TemplateParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -123,17 +175,18 @@
         <option value="$PROJECT_DIR$/src/turing/Direction.java" />
         <option value="$PROJECT_DIR$/src/turing/TuringCommandIndex.java" />
         <option value="$PROJECT_DIR$/src/turing/TuringCommand.java" />
-        <option value="$PROJECT_DIR$/src/alphabet/TemplateSymbol.java" />
         <option value="$PROJECT_DIR$/src/alphabet/TemplateParserTest.java" />
         <option value="$PROJECT_DIR$/src/tests/TemplateParserTest.java" />
         <option value="$PROJECT_DIR$/test/tests/TemplateParserTest.java" />
         <option value="$PROJECT_DIR$/test/parsers/TemplateParserTest.java" />
         <option value="$PROJECT_DIR$/src/alphabet/TemplateParser.java" />
-        <option value="$PROJECT_DIR$/src/Test.java" />
-        <option value="$PROJECT_DIR$/src/alphabet/Alphabet.java" />
-        <option value="$PROJECT_DIR$/test/alphabet/AlphabetMatchers.java" />
         <option value="$PROJECT_DIR$/test/alphabet/AlphabetTest.java" />
         <option value="$PROJECT_DIR$/test/alphabet/TemplateParserTest.java" />
+        <option value="$PROJECT_DIR$/test/alphabet/AlphabetMatchers.java" />
+        <option value="$PROJECT_DIR$/src/alphabet/Alphabet.java" />
+        <option value="$PROJECT_DIR$/src/Test.java" />
+        <option value="$PROJECT_DIR$/src/alphabet/TemplateSymbol.java" />
+        <option value="$PROJECT_DIR$/src/interpreter/EmptySymbol.java" />
       </list>
     </option>
   </component>
@@ -185,6 +238,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -249,6 +303,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="turing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interpreter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interpreter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interpreter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interpreter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interpreter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="alphabet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -256,7 +346,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -279,37 +368,14 @@
       <recent name="parsers" />
       <recent name="tests" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="alphabet" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AlphabetTest">
-    <configuration default="false" name="AlphabetTest.union" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="alphabet.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="Interpreter" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="alphabet" />
-      <option name="MAIN_CLASS_NAME" value="alphabet.AlphabetTest" />
-      <option name="METHOD_NAME" value="union" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.TemplateParserTest">
     <configuration default="false" name="AlphabetTest.intersection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -400,6 +466,32 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="alphabet" />
       <option name="MAIN_CLASS_NAME" value="alphabet.AlphabetTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TemplateParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="alphabet.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Interpreter" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="alphabet" />
+      <option name="MAIN_CLASS_NAME" value="alphabet.TemplateParserTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -843,19 +935,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.AlphabetTest.union" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.AlphabetTest.intersection" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.AlphabetTest.difference" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.AlphabetTest.containSet" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.AlphabetTest" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.AlphabetTest.intersection" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.AlphabetTest.difference" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AlphabetTest.containSet" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.AlphabetTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TemplateParserTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.AlphabetTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.AlphabetTest.containSet" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.AlphabetTest.difference" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.AlphabetTest.intersection" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.AlphabetTest.union" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TemplateParserTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.AlphabetTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.AlphabetTest.containSet" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.AlphabetTest.difference" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.AlphabetTest.intersection" />
       </list>
     </recent_temporary>
   </component>
@@ -893,6 +985,7 @@
       <workItem from="1459534634774" duration="2000000" />
       <workItem from="1459536699907" duration="8757000" />
       <workItem from="1459582769000" duration="16719000" />
+      <workItem from="1459701141224" duration="4569000" />
     </task>
     <task id="LOCAL-00001" summary="Added JavaDoc comment for classes from interpreter package">
       <created>1459192733060</created>
@@ -919,26 +1012,23 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AlphabetTest - 2016.04.02 at 15h 40m 38s.xml">
+    <history-entry file="AlphabetTest - 2016.04.03 at 19h 47m 09s.xml">
       <configuration name="AlphabetTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AlphabetTest_containSet - 2016.04.02 at 15h 39m 54s.xml">
+    <history-entry file="AlphabetTest - 2016.04.03 at 19h 55m 10s.xml">
+      <configuration name="AlphabetTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AlphabetTest_containSet - 2016.04.03 at 19h 48m 08s.xml">
       <configuration name="AlphabetTest.containSet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AlphabetTest_containSet - 2016.04.02 at 15h 40m 28s.xml">
+    <history-entry file="AlphabetTest_containSet - 2016.04.03 at 19h 49m 36s.xml">
       <configuration name="AlphabetTest.containSet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AlphabetTest_difference - 2016.04.02 at 15h 33m 47s.xml">
-      <configuration name="AlphabetTest.difference" configurationId="JUnit" />
+    <history-entry file="AlphabetTest_containSet - 2016.04.03 at 19h 50m 20s.xml">
+      <configuration name="AlphabetTest.containSet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AlphabetTest_difference - 2016.04.02 at 15h 34m 43s.xml">
-      <configuration name="AlphabetTest.difference" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AlphabetTest_difference - 2016.04.02 at 15h 35m 21s.xml">
-      <configuration name="AlphabetTest.difference" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AlphabetTest_difference - 2016.04.02 at 15h 36m 59s.xml">
-      <configuration name="AlphabetTest.difference" configurationId="JUnit" />
+    <history-entry file="AlphabetTest_containSet - 2016.04.03 at 19h 53m 32s.xml">
+      <configuration name="AlphabetTest.containSet" configurationId="JUnit" />
     </history-entry>
     <history-entry file="AlphabetTest_intersection - 2016.04.02 at 15h 27m 48s.xml">
       <configuration name="AlphabetTest.intersection" configurationId="JUnit" />
@@ -949,9 +1039,12 @@
     <history-entry file="AlphabetTest_intersection - 2016.04.02 at 15h 30m 57s.xml">
       <configuration name="AlphabetTest.intersection" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="TemplateParserTest - 2016.04.03 at 19h 56m 37s.xml">
+      <configuration name="TemplateParserTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150903000" />
+    <option name="totallyTimeSpent" value="155472000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -959,7 +1052,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3251634" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -968,11 +1061,10 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.4969743" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26399395" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26096824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -984,6 +1076,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1003,14 +1096,15 @@
     <MESSAGE value="Added JavaDoc comment for classes from alphabet, turing and URM packages" />
     <MESSAGE value="Added JUnit4 tests for alphabet.TemplateParser.isValidSet() method" />
     <MESSAGE value="Added JUnit4 tests for Alphabet and TemplateParser classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added JUnit4 tests for Alphabet and TemplateParser classes" />
+    <MESSAGE value="Added EmptySymbol class, improved TemplateSymbol and Alphabet classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added EmptySymbol class, improved TemplateSymbol and Alphabet classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="55" />
+      <option name="time" value="58" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -1023,13 +1117,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/turing/TuringCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/interpreter/Interpreter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1239,13 +1326,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/turing/Direction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/turing/TuringCommandIndex.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1338,7 +1418,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
           <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1346,7 +1425,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
           <caret line="358" column="0" selection-start-line="358" selection-start-column="0" selection-end-line="358" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1354,41 +1432,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/alphabet/TemplateParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/alphabet/TemplateSymbol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/alphabet/AlphabetTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1402,19 +1445,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/alphabet/Alphabet.java">
+    <entry file="file://$PROJECT_DIR$/test/alphabet/AlphabetTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/turing/Direction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/alphabet/TemplateParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/alphabet/TemplateParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/alphabet/Alphabet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/alphabet/TemplateSymbol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#2135#2136#0" expanded="true" />
+            <element signature="e#2204#2205#0" expanded="true" />
+            <element signature="e#2656#2657#0" expanded="true" />
+            <element signature="e#2683#2684#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/alphabet/EmptySymbol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <folding>
+            <element signature="e#184#185#0" expanded="true" />
+            <element signature="e#212#213#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

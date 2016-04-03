@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Represents container of symbols for MarkovCommand, MarkovProgram and TemplateSymbol classes
@@ -17,20 +15,18 @@ public class Alphabet implements Iterable<Character> {
     /**Means special "empty symbol"*/
     private char emptySymbol;
 
+    public Alphabet() {
+        this.alphabet = new HashSet<>();
+        this.emptySymbol = EmptySymbol.get();
+    }
+
     public Alphabet(Set<Character> alphabet) {
+        this();
         this.alphabet = alphabet;
-        this.emptySymbol = '$';
-        addSymbol(emptySymbol);
     }
     public Alphabet(char[] symbols) {
         this();
         addSymbols(symbols);
-    }
-
-    public Alphabet() {
-        this.alphabet = new HashSet<>();
-        this.emptySymbol = '$';
-        addSymbol(emptySymbol);
     }
 
     /**
@@ -81,7 +77,7 @@ public class Alphabet implements Iterable<Character> {
      * @return {@code true} if alphabet contains symbol, else {@code false}
      */
     public boolean contains(char c) {
-        return alphabet.contains(c);
+        return c==emptySymbol || alphabet.contains(c);
     }
 
     /**
@@ -110,7 +106,7 @@ public class Alphabet implements Iterable<Character> {
             result += c + " ";
         }
 
-        result += "[" + alphabet.size() + "]";
+        result += "[" + alphabet.size() + "] EmptySymbol = " + EmptySymbol.get();
 
         return result;
     }
@@ -198,7 +194,7 @@ public class Alphabet implements Iterable<Character> {
         temp.retainAll(a.getCharactersSet());
 
         if(temp.isEmpty()) {
-            throw new IllegalArgumentException("Wrong result of intersection");
+            return new Alphabet();
         }
         else {
             return new Alphabet(temp);

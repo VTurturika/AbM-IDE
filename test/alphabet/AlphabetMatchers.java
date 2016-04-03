@@ -25,7 +25,7 @@ public class AlphabetMatchers {
                     Alphabet actual = ((Alphabet) o);
 
                     return actual.getCharactersSet().equals(expected.getCharactersSet()) &&
-                            actual.getEmptySymbol() == expected.getEmptySymbol();
+                           actual.getEmptySymbol() == expected.getEmptySymbol();
                 }
                 else return false;
             }
