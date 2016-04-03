@@ -106,4 +106,16 @@ public class TemplateSymbol {
                "isTemplateString: " + isTemplateString() + "\n" +
                 "templateStringMode: " + getTemplateStringMode() + "\n";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof TemplateSymbol) {
+
+            TemplateSymbol another = (TemplateSymbol) obj;
+            return this.getAlphabet().equals(another.getAlphabet()) &&
+                   this.isTemplateString() == another.isTemplateString() &&
+                   this.getTemplateStringMode() == another.getTemplateStringMode();
+        }
+        else return false;
+    }
 }

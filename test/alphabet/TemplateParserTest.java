@@ -92,11 +92,50 @@ public class TemplateParserTest {
 
         TemplateParser parser = new TemplateParser();
         Alphabet alphabet = new Alphabet();
+
+        //case 1
         alphabet.addSymbols(new char[]{'a', 'b', 'c'});
-
         TemplateSymbol t = new TemplateSymbol('x', alphabet);
+        assertThat("Simple definition", t, AlphabetMatchers.isTemplateSymbol(
+                   parser.createTemplateSymbol(": x in {'a', 'b', 'c'}")));
 
-        assertThat(t, AlphabetMatchers.isTemplateSymbol(parser.createTemplateSymbol(": x in {'a', 'b', 'c'}")));
+        //case 2
+        t.getAlphabet().addSymbols(new char[]{'d', 'e'});
+        assertThat("Definition with operation", t, AlphabetMatchers.isTemplateSymbol(
+                   parser.createTemplateSymbol(": x in {'a', 'b', 'c'} union {'d', 'e'}")));
 
+        t.getAlphabet().clear();
+        t.getAlphabet().addSymbol('a');
+        t.setTemplateString(true);
+        t.setTemplateStringMode(TemplateSymbol.TemplateStringMode.STRING);
+        assertThat("Simple Kleene Star", t, AlphabetMatchers.isTemplateSymbol(
+                   parser.createTemplateSymbol(": x in ({'a'})*")));
+
+        t.getAlphabet().addSymbol('b');
+        assertThat("Kleene Star with union", t, AlphabetMatchers.isTemplateSymbol(
+                parser.createTemplateSymbol(": x in ({'a'} or {'b'})*")));
+
+        t.getAlphabet().deleteSymbol('b');
+        assertThat("Kleene Star with difference", t, AlphabetMatchers.isTemplateSymbol(
+                parser.createTemplateSymbol(": x in ( {'a','b'} \\ {'b'} )*")));
+
+        t.setTemplateStringMode(TemplateSymbol.TemplateStringMode.NONEMPTY_STRING);
+        assertThat("Simple Kleene Plus", t, AlphabetMatchers.isTemplateSymbol(
+                parser.createTemplateSymbol(": x in ({'a'})+")));
+
+        t.getAlphabet().addSymbol('b');
+        assertThat("Kleene Star with union", t, AlphabetMatchers.isTemplateSymbol(
+                parser.createTemplateSymbol(": x in ({'a'} or {'b'})+")));
+
+        t.getAlphabet().deleteSymbol('b');
+        assertThat("Kleene Star with difference", t, AlphabetMatchers.isTemplateSymbol(
+                parser.createTemplateSymbol(": x in ( {'a','b'} \\ {'b'} )+")));
+
+        t = new TemplateSymbol('X', new Alphabet(new char[]{'|'}));
+        t.setTemplateString(true);
+        t.setTemplateStringMode(TemplateSymbol.TemplateStringMode.NONEMPTY_STRING);
+
+        assertThat("Simulaton real Markov Command", t, AlphabetMatchers.isTemplateSymbol(
+                parser.createTemplateSymbol("X#->X**X#X# : X in ({'|'})+ ")));
     }
 }

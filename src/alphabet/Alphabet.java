@@ -228,4 +228,16 @@ public class Alphabet implements Iterable<Character> {
     public Set<Character> getCharactersSet() {
         return Collections.unmodifiableSet(alphabet);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj instanceof Alphabet) {
+
+            Alphabet another = (Alphabet) obj;
+            return this.getCharactersSet().equals(another.getCharactersSet()) &&
+                   this.getEmptySymbol() == another.getEmptySymbol();
+        }
+        else return false;
+    }
 }

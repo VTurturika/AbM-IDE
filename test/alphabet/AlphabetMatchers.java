@@ -23,9 +23,7 @@ public class AlphabetMatchers {
                 if(o instanceof Alphabet) {
 
                     Alphabet actual = ((Alphabet) o);
-
-                    return actual.getCharactersSet().equals(expected.getCharactersSet()) &&
-                           actual.getEmptySymbol() == expected.getEmptySymbol();
+                    return actual.equals(expected);
                 }
                 else return false;
             }
@@ -50,11 +48,8 @@ public class AlphabetMatchers {
             public boolean matches(Object o) {
                 if(o instanceof TemplateSymbol) {
 
-                    TemplateSymbol actual = ((TemplateSymbol) o);
-
-                    assertThat(actual.getAlphabet(), isAlphabet(expected.getAlphabet()));
-                    return actual.getAlias() == expected.getAlias() &&
-                            actual.isTemplateString() == expected.isTemplateString();
+                    TemplateSymbol actual = (TemplateSymbol) o;
+                    return actual.equals(expected);
                 }
                 return false;
             }
