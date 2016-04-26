@@ -9,8 +9,6 @@ public class TemplateSymbol {
     private char alias;
     /**Alphabet that includes this template symbol*/
     private Alphabet alphabet;
-    /**Shows that template symbol means string from {@code Alphabet}*/
-    private boolean isTemplateString;
 
     /**Determines type of string mode of {@code TemplateSymbol}*/
     public enum TemplateStringMode {
@@ -43,24 +41,17 @@ public class TemplateSymbol {
      *
      * @param alias alias of {@code TemplateSymbol}
      * @param alphabet {@code Alphabet} that includes this symbol
-     * @param isTemplateString  shows that template symbol means string from {@code Alphabet}
      * @param mode if {@code TemplateSymbol} means TemplateString determines its type
      */
-    public TemplateSymbol(char alias, Alphabet alphabet,
-                          boolean isTemplateString, TemplateSymbol.TemplateStringMode mode) {
+    public TemplateSymbol(char alias, Alphabet alphabet, TemplateSymbol.TemplateStringMode mode) {
         this.alias = alias;
         this.alphabet = alphabet;
-        this.isTemplateString = isTemplateString;
         this.mode = mode;
 
     }
 
-    public TemplateSymbol(char alias, Alphabet alphabet, boolean isTemplateString) {
-        this(alias, alphabet, isTemplateString, TemplateStringMode.STRING);
-    }
-
     public TemplateSymbol(char alias, Alphabet alphabet) {
-        this(alias, alphabet, false, TemplateStringMode.NONE);
+        this(alias, alphabet, TemplateStringMode.NONE);
     }
 
     public char getAlias() {
@@ -79,23 +70,17 @@ public class TemplateSymbol {
         this.alphabet = alphabet;
     }
 
-    public void setTemplateString(boolean flag) {
-        isTemplateString = flag;
-    }
-
     public TemplateSymbol.TemplateStringMode getTemplateStringMode() {
         return mode;
     }
 
     public void setTemplateStringMode(TemplateSymbol.TemplateStringMode mode) {
 
-        if(isTemplateString()) {
-            this.mode = mode;
-        }
+        this.mode = mode;
     }
 
     public boolean isTemplateString() {
-        return isTemplateString;
+        return this.mode != TemplateStringMode.NONE;
     }
 
     @Override
@@ -104,7 +89,7 @@ public class TemplateSymbol {
         return "Alias: " + getAlias() + "\n" +
                "Alphabet: " + getAlphabet() + "\n" +
                "isTemplateString: " + isTemplateString() + "\n" +
-                "templateStringMode: " + getTemplateStringMode() + "\n";
+               "templateStringMode: " + getTemplateStringMode() + "\n";
     }
 
     @Override

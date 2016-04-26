@@ -1,6 +1,5 @@
 package alphabet;
 
-import org.hamcrest.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -8,6 +7,22 @@ import static org.junit.Assert.*;
  * Implements tests for TemplateParser class methods
  */
 public class TemplateParserTest {
+
+    @Test
+    public void isValidDefinition() throws Exception {
+
+        TemplateParser parser = new TemplateParser();
+
+        assertTrue(parser.isValidDefinition(": x in {'1', '2', '3'}"));
+        assertTrue(parser.isValidDefinition(": x,y in {'1','2','3'}"));
+        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}"));
+
+        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}, a in {'4', '5'}"));
+        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}, a,b in {'4', '5'}"));
+
+        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}, a,b in {'4', '5'}+, w in T*"));
+    }
+
 
     @Test
     public void isValidSet() throws Exception {
@@ -23,119 +38,60 @@ public class TemplateParserTest {
         assertFalse("Predefined small T", parser.isValidSet("t"));
         assertTrue("Predefined I", parser.isValidSet("I"));
         assertTrue("Predefined O", parser.isValidSet("O"));
-
-        //with extra chars
-        assertTrue("enumerable set + extra", parser.isValidSet("qwerty{'1','2','3'}"));
-        assertTrue("Predefined T + extra T", parser.isValidSet("TTTT")); /// ???
-
-    //with set operation
-
-        //simple tests (PS = predefined set)
-
-        //simple unions
-        assertTrue("union PS 1", parser.isValidSet("T union O"));
-        assertTrue("union PS 2", parser.isValidSet("T or O"));
-        assertTrue("union PS 3", parser.isValidSet("T OR O"));
-        assertTrue("union PS 4", parser.isValidSet("T | O"));
-        assertTrue("union PS 5", parser.isValidSet("T ∪ O"));
-
-        //simple intersections
-        assertTrue("intersection PS 1", parser.isValidSet("T intersect O"));
-        assertTrue("intersection PS 2", parser.isValidSet("T and O"));
-        assertTrue("intersection PS 3", parser.isValidSet("T AND O"));
-        assertTrue("intersection PS 4", parser.isValidSet("T & O"));
-        assertTrue("intersection PS 5", parser.isValidSet("T ∩ O"));
-
-        //simple difference
-        assertTrue("difference PS 1", parser.isValidSet("T \\ O"));
-        assertTrue("difference PS 1", parser.isValidSet("T diff O"));
-
-        //with extra chars
-        assertTrue("union + extra", parser.isValidSet("qwertyTT or \tO"));
-        assertTrue("intersection + extra", parser.isValidSet("\n\nqwerty\tT    AND \tO"));
-        assertTrue("difference + extra", parser.isValidSet("T\t\t\b\tdiff \tO"));
-
-        //hard tests
-        assertTrue("hard 1", parser.isValidSet("{'a'} union {'b'} diff {'c'}"));
-        assertTrue("hard 2", parser.isValidSet("{'a'} union ( {'b'} diff {'c'} )"));
     }
 
-    @Test
-    public void createAlphabet() throws Exception {
 
-        TemplateParser parser = new TemplateParser();
-        Alphabet alphabet = new Alphabet();
-
-        alphabet.addSymbols(new char[]{'1', '2', '3'});
-
-        assertThat(alphabet, AlphabetMatchers.isAlphabet(parser.createAlphabet("{'1','2','3'}")));
-
-        alphabet.clear();
-        alphabet.addSymbols(new char[]{'a', 'b', 'c'});
-
-        //assertThat(alphabet, alphabetMatcher(parser.createAlphabet("({'a'} union {'b'}) union {c}")));
-
-        alphabet.deleteSymbol('c');
-        assertThat("union test",
-                   alphabet, AlphabetMatchers.isAlphabet(parser.createAlphabet("{'a'} union {'b'}")));
-
-        alphabet.deleteSymbol('b');
-        assertThat("intersection test",
-                   alphabet, AlphabetMatchers.isAlphabet(parser.createAlphabet("{'a', 'b'} and {'a', 'c'}")));
-
-        assertThat("difference test",
-                   alphabet, AlphabetMatchers.isAlphabet(parser.createAlphabet("{'a', 'b'} diff {'b', 'c'}")));
-
-    }
     @Test
     public void createTemplateSymbol() throws Exception {
 
         TemplateParser parser = new TemplateParser();
+
         Alphabet alphabet = new Alphabet();
-
-        //case 1
         alphabet.addSymbols(new char[]{'a', 'b', 'c'});
-        TemplateSymbol t = new TemplateSymbol('x', alphabet);
-        assertThat("Simple definition", t, AlphabetMatchers.isTemplateSymbol(
-                   parser.createTemplateSymbol(": x in {'a', 'b', 'c'}")));
+        TemplateSymbol origin = new TemplateSymbol('x', alphabet);
 
-        //case 2
-        t.getAlphabet().addSymbols(new char[]{'d', 'e'});
-        assertThat("Definition with operation", t, AlphabetMatchers.isTemplateSymbol(
-                   parser.createTemplateSymbol(": x in {'a', 'b', 'c'} union {'d', 'e'}")));
+        assertEquals("Just a symbol", origin, parser.createTemplateSymbol("x in {'a', 'b', 'c'}"));
 
-        t.getAlphabet().clear();
-        t.getAlphabet().addSymbol('a');
-        t.setTemplateString(true);
-        t.setTemplateStringMode(TemplateSymbol.TemplateStringMode.STRING);
-        assertThat("Simple Kleene Star", t, AlphabetMatchers.isTemplateSymbol(
-                   parser.createTemplateSymbol(": x in ({'a'})*")));
+        origin.setTemplateStringMode(TemplateSymbol.TemplateStringMode.STRING);
+        assertEquals("Template string", origin, parser.createTemplateSymbol("x in {'a', 'b', 'c'}*"));
 
-        t.getAlphabet().addSymbol('b');
-        assertThat("Kleene Star with union", t, AlphabetMatchers.isTemplateSymbol(
-                parser.createTemplateSymbol(": x in ({'a'} or {'b'})*")));
+        origin.setTemplateStringMode(TemplateSymbol.TemplateStringMode.NONEMPTY_STRING);
+        assertEquals("Nonempty template string", origin, parser.createTemplateSymbol("x in {'a', 'b', 'c'}+"));
 
-        t.getAlphabet().deleteSymbol('b');
-        assertThat("Kleene Star with difference", t, AlphabetMatchers.isTemplateSymbol(
-                parser.createTemplateSymbol(": x in ( {'a','b'} \\ {'b'} )*")));
+        origin = new TemplateSymbol('X', new Alphabet(new char[]{'|'}));
+        origin.setTemplateStringMode(TemplateSymbol.TemplateStringMode.NONEMPTY_STRING);
 
-        t.setTemplateStringMode(TemplateSymbol.TemplateStringMode.NONEMPTY_STRING);
-        assertThat("Simple Kleene Plus", t, AlphabetMatchers.isTemplateSymbol(
-                parser.createTemplateSymbol(": x in ({'a'})+")));
+        assertEquals("Simulaton real Markov Command", origin, parser.createTemplateSymbol("X#->X**X#X# : X in {'|'}+"));
 
-        t.getAlphabet().addSymbol('b');
-        assertThat("Kleene Star with union", t, AlphabetMatchers.isTemplateSymbol(
-                parser.createTemplateSymbol(": x in ({'a'} or {'b'})+")));
+    }
 
-        t.getAlphabet().deleteSymbol('b');
-        assertThat("Kleene Star with difference", t, AlphabetMatchers.isTemplateSymbol(
-                parser.createTemplateSymbol(": x in ( {'a','b'} \\ {'b'} )+")));
+    @Test
+    public void createTemplateSymbols() throws Exception {
 
-        t = new TemplateSymbol('X', new Alphabet(new char[]{'|'}));
-        t.setTemplateString(true);
-        t.setTemplateStringMode(TemplateSymbol.TemplateStringMode.NONEMPTY_STRING);
+        TemplateParser parser = new TemplateParser();
+        Alphabet alphabet1 = new Alphabet(new char[]{'1','2','3'});
 
-        assertThat("Simulaton real Markov Command", t, AlphabetMatchers.isTemplateSymbol(
-                parser.createTemplateSymbol("X#->X**X#X# : X in ({'|'})+ ")));
+        TemplateSymbol[] result1 = {new TemplateSymbol('x', alphabet1), new TemplateSymbol('y', alphabet1)};
+        assertArrayEquals(result1, parser.createTemplateSymbols("x,y in {'1', '2', '3'}"));
+
+        Alphabet alphabet2 = new Alphabet(new char[]{'4', '5'});
+        TemplateSymbol[] result2 = {new TemplateSymbol('x', alphabet1),
+                                    new TemplateSymbol('y', alphabet1),
+                                    new TemplateSymbol('a', alphabet2, TemplateSymbol.TemplateStringMode.STRING),
+                                    new TemplateSymbol('b', alphabet2, TemplateSymbol.TemplateStringMode.STRING)};
+
+        assertArrayEquals(result2, parser.createTemplateSymbols("x,y in {'1', '2', '3'}, a,b in {'4', '5'}*"));
+    }
+
+    @Test
+    public void hasMoreOneTemplateSymbol() throws Exception {
+
+        TemplateParser parser = new TemplateParser();
+
+        assertTrue(parser.hasMoreOneTemplateSymbol("x,y in {'a'}"));
+        assertTrue(parser.hasMoreOneTemplateSymbol("x,y,z in {'a'}"));
+
+        assertFalse(parser.hasMoreOneTemplateSymbol("x in {'b'}"));
+
     }
 }
