@@ -1,8 +1,8 @@
-import interpreter.*;
-import turing.*;
-import markov.*;
-import parsers.*;
-import alphabet.*;
+import logic.interpreter.*;
+import logic.turing.*;
+import logic.markov.*;
+import logic.parsers.*;
+import logic.alphabet.*;
 
 public class Test {
 
