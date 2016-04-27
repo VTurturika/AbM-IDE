@@ -28,13 +28,7 @@ public class MarkovProgram implements Program {
     @Override
     public Command getCommand(CommandIndex index) {
 
-        MarkovCommandIndex commandIndex = (MarkovCommandIndex) index.getIndexInstance();
-
-        if(commandIndex.getIndex() >= program.size() || commandIndex.getIndex() < 0) {
-            return new StopCommand();
-        }
-
-        return  program.get(commandIndex.getIndex());
+       return null;
     }
 
     @Override
@@ -118,5 +112,10 @@ public class MarkovProgram implements Program {
                 return iter.next();
             }
         };
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

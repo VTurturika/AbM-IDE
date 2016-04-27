@@ -1,7 +1,7 @@
 package alphabet;
 
 /**
- * Represents "template symbol" for Markov Algorithms command
+ * Represents "template symbol" for markov Algorithms command
  */
 public class TemplateSymbol {
 

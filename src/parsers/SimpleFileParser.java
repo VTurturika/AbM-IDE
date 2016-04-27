@@ -14,9 +14,10 @@ import java.util.regex.*;
 abstract public class SimpleFileParser {
 
     private String filename;
-    protected List<String> strings;
+    private List<String> strings;
     protected Pattern commandPattern;
     protected Program program;
+    protected final String comment = "\\/\\/.*";
 
 
     public SimpleFileParser(String filename) {
@@ -40,7 +41,10 @@ abstract public class SimpleFileParser {
             FileReader fileReader = new FileReader(filename);
             BufferedReader reader = new BufferedReader(fileReader);
             while( (temp = reader.readLine() )!= null ) {
-                strings.add(temp);
+
+                if(!temp.equals("")) {
+                    strings.add(temp);
+                }
             }
             fileReader.close();
             reader.close();
@@ -71,8 +75,11 @@ abstract public class SimpleFileParser {
         for (String s : strings) {
 
             try {
-                program.addCommand(parseCommand(s));
-            } catch (IllegalArgumentException e) {
+                Command c = parseCommand(s);
+                if (c != null) {
+                    program.addCommand(c);
+                }
+            } catch (Exception e) {
                 program.clearProgram();
                 throw new RuntimeException("Error of parsing command " + s);
             }
@@ -80,5 +87,5 @@ abstract public class SimpleFileParser {
         return program;
     }
 
-    abstract public Command parseCommand(String str);
+    abstract public Command parseCommand(String str) throws Exception;
 }

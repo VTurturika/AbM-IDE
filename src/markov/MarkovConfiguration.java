@@ -22,16 +22,6 @@ public class MarkovConfiguration extends Configuration {
         this.markovString = markovString;
     }
 
-    public void replace(String pattern, String replacement) {
-
-        if(pattern.equals("")){
-            markovString = replacement + markovString;
-        }
-        else {
-            markovString = markovString.replace(pattern, replacement);
-        }
-    }
-
     @Override
     public String toString() {
         return getString() +  " [" + getString().length() + "]";

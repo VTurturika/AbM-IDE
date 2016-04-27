@@ -53,7 +53,7 @@ public class TemplateParser {
      * @param stringSet string that will be checked
      * @return {@code true} if specified string is correct, else returns {@code false}
      */
-    public boolean isValidDefinition(String stringSet) {
+    public boolean hasTemplateSymbolDefinition(String stringSet) {
 
         return Pattern.compile(correctDefinition).matcher(stringSet).find();
     }

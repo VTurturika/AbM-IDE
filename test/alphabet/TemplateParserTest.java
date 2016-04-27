@@ -9,18 +9,18 @@ import static org.junit.Assert.*;
 public class TemplateParserTest {
 
     @Test
-    public void isValidDefinition() throws Exception {
+    public void hasTemplateSymbolDefinition() throws Exception {
 
         TemplateParser parser = new TemplateParser();
 
-        assertTrue(parser.isValidDefinition(": x in {'1', '2', '3'}"));
-        assertTrue(parser.isValidDefinition(": x,y in {'1','2','3'}"));
-        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}"));
+        assertTrue(parser.hasTemplateSymbolDefinition(": x in {'1', '2', '3'}"));
+        assertTrue(parser.hasTemplateSymbolDefinition(": x,y in {'1','2','3'}"));
+        assertTrue(parser.hasTemplateSymbolDefinition(": x,y,z in {'1','2','3'}"));
 
-        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}, a in {'4', '5'}"));
-        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}, a,b in {'4', '5'}"));
+        assertTrue(parser.hasTemplateSymbolDefinition(": x,y,z in {'1','2','3'}, a in {'4', '5'}"));
+        assertTrue(parser.hasTemplateSymbolDefinition(": x,y,z in {'1','2','3'}, a,b in {'4', '5'}"));
 
-        assertTrue(parser.isValidDefinition(": x,y,z in {'1','2','3'}, a,b in {'4', '5'}+, w in T*"));
+        assertTrue(parser.hasTemplateSymbolDefinition(": x,y,z in {'1','2','3'}, a,b in {'4', '5'}+, w in T*"));
     }
 
 
