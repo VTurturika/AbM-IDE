@@ -22,6 +22,7 @@ public class App extends Application {
         VBox mainLayout = FXMLLoader.load(getClass().getResource("./views/mainLayout.fxml"));
         Scene mainScene = new Scene(mainLayout, mainLayout.getPrefWidth(), mainLayout.getPrefHeight());
         primaryStage.setScene(mainScene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }

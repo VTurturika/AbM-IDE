@@ -7,8 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="ide.controllers.MainController">
+<VBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ide.views.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -47,7 +46,16 @@ fx:controller="ide.controllers.MainController">
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-    </AnchorPane>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" text="Button" />
+        </items>
+      </ToolBar>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea prefHeight="320.0" prefWidth="451.0" />
+         </children>
+      </HBox>
+      <Pane fx:id="configWidget" minHeight="150.0" prefHeight="167.0" prefWidth="700.0" />
   </children>
 </VBox>
