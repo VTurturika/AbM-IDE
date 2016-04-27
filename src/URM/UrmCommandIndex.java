@@ -2,6 +2,9 @@ package URM;
 
 import interpreter.*;
 
+/**
+ * Implements {@code CommandIndex} for URM's {@code Program}
+ */
 public class UrmCommandIndex extends CommandIndex {
 
     private int index;
@@ -30,6 +33,9 @@ public class UrmCommandIndex extends CommandIndex {
         setIndex(commandIndex.getIndex());
     }
 
+    /**
+     * Increments internal value of CommandIndex
+     */
     public void nextIndex() {
         index++;
     }

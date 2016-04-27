@@ -1,16 +1,23 @@
 package markov;
 
+import alphabet.Alphabet;
 import interpreter.*;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Iterator;
+import java.util.regex.*;
 
 public class MarkovProgram implements Program {
 
-    ArrayList<MarkovCommand> program;
+    private ArrayList<MarkovCommand> program;
+    private Alphabet mainAlphabet;
+    private Alphabet inputAlphabet;
+    private Alphabet outputAlphabet;
 
     public MarkovProgram() {
         this.program = new ArrayList<>();
+        this.mainAlphabet = null;
+        this.inputAlphabet = null;
+        this.outputAlphabet = null;
     }
 
     @Override
@@ -21,20 +28,11 @@ public class MarkovProgram implements Program {
     @Override
     public Command getCommand(CommandIndex index) {
 
-        MarkovCommandIndex commandIndex = (MarkovCommandIndex) index.getIndexInstance();
-
-        for(MarkovCommand c: program) {
-
-            if( commandIndex.getPattern().contains(c.getPattern()) ) {
-                return c;
-            }
-        }
-
-        return new StopCommand();
+       return null;
     }
 
     @Override
-    public int getCommandNumber() {
+    public int getNumberOfCommands() {
         return program.size();
     }
 
@@ -52,5 +50,72 @@ public class MarkovProgram implements Program {
         }
 
         return result;
+    }
+
+    public Alphabet getMainAlphabet() {
+        return mainAlphabet;
+    }
+
+    public void setMainAlphabet(Alphabet mainAlphabet) {
+        this.mainAlphabet = mainAlphabet;
+        this.inputAlphabet = mainAlphabet;
+        this.outputAlphabet = mainAlphabet;
+    }
+
+    public Alphabet getInputAlphabet() {
+        return inputAlphabet;
+    }
+
+    public void setInputAlphabet(Alphabet inputAlphabet) {
+
+        if(hasMainAlphabet() && mainAlphabet.containSet(inputAlphabet)) {
+            this.inputAlphabet = inputAlphabet;
+        }
+    }
+
+    public Alphabet getOutputAlphabet() {
+        return outputAlphabet;
+    }
+
+    public void setOutputAlphabet(Alphabet outputAlphabet) {
+
+        if(hasMainAlphabet() && mainAlphabet.containSet(outputAlphabet)) {
+            this.outputAlphabet = outputAlphabet;
+        }
+    }
+
+    public boolean hasMainAlphabet() {
+        return (mainAlphabet != null);
+    }
+
+    public boolean hasInputAlphabet() {
+        return (inputAlphabet != null);
+    }
+
+    public boolean hasOutputAlphabet() {
+        return (outputAlphabet != null);
+    }
+
+    @Override
+    public Iterator<Command> iterator() {
+        return new Iterator<Command>() {
+
+            private Iterator<MarkovCommand> iter = program.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return iter.hasNext();
+            }
+
+            @Override
+            public Command next() {
+                return iter.next();
+            }
+        };
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

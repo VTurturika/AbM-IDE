@@ -1,5 +1,8 @@
 package turing;
 
+/**
+ * Represents direction of machine head
+ */
 public enum Direction {
     LEFT, NONE, RIGHT;
 

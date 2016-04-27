@@ -1,39 +1,50 @@
 package markov;
 
+import alphabet.TemplateSymbol;
 import interpreter.Command;
 import interpreter.Configuration;
 import interpreter.Interpreter;
 import interpreter.StopCommand;
 
+import java.util.regex.Pattern;
+
 public class MarkovInterpreter extends Interpreter {
 
-    private MarkovCommandIndex index;
     private MarkovConfiguration markovString;
     private boolean hasFinishCommand;
 
-
     public MarkovInterpreter() {
-        this.index = new MarkovCommandIndex();
-        this.markovString = new MarkovConfiguration();
+
+        this.markovString = null;
         this.hasFinishCommand = false;
     }
 
     @Override
     protected Command getFirstCommand() {
 
-        if(markovString != null) {
-            index.setPattern(markovString.getString());
-            return program.getCommand(index);
-        }
-        else {
-            return new StopCommand();
-        }
+        return ( markovString == null ) ? new StopCommand() : nextCommand();
     }
 
     @Override
     protected Command nextCommand() {
 
-        return (!hasFinishCommand) ? program.getCommand(index) : new StopCommand();
+        if(hasFinishCommand) {
+            return new StopCommand();
+        }
+
+        for(Command c : program) {
+            MarkovCommand command = (MarkovCommand) c.getInstance();
+
+            if(!command.canExecute()) {
+                prepareForExecute(command);
+            }
+
+            if(isSuitableCommand(command)) {
+                return c;
+            }
+        }
+
+        return new StopCommand();
     }
 
     @Override
@@ -41,15 +52,11 @@ public class MarkovInterpreter extends Interpreter {
 
         MarkovCommand command = (MarkovCommand) c.getInstance();
 
-        markovString.setString( replace(command.getPattern(),command.getReplacement()) );
+        markovString.setString( replace( command.getExecutePattern(), command.getExecuteReplacement() ) );
 
-        if( command.isFinishCommand() ) {
+        if(command.isFinishCommand()) {
             hasFinishCommand = true;
         }
-        else {
-            index.setPattern(markovString.getString());
-        }
-
     }
 
     @Override
@@ -59,20 +66,70 @@ public class MarkovInterpreter extends Interpreter {
 
     private String replace(String pattern, String replacement) {
 
-        String regexPattern = "";
-        for (int i = 0; i < pattern.length(); i++) {
-
-            if( isMetaSymbol(pattern.charAt(i)) ) {
-                regexPattern += "\\";
-            }
-            regexPattern += pattern.charAt(i);
-        }
-
-        return markovString.getString().replaceFirst(regexPattern, replacement);
+        return markovString.getString().replaceFirst(pattern, replacement);
     }
 
     private boolean isMetaSymbol(char c) {
 
         return ( ".\\|()[]{}$^+*?".indexOf(c) != -1 );
+    }
+
+    private void prepareForExecute(MarkovCommand command) {
+
+        command.setExecutePattern( protectFromMetaSymbols(command.getPattern()) );
+        command.setExecuteReplacement( protectFromMetaSymbols(command.getReplacement()) );
+
+        if(command.isTemplateCommand()) {
+
+            String pattern, replacement, templatePattern;
+            for(TemplateSymbol t: command) {
+
+                switch(t.getTemplateStringMode()){
+
+                    case NONE:
+                        templatePattern = t.getAlphabet().getSymbolPattern();
+                        break;
+                    case STRING:
+                        templatePattern = t.getAlphabet().getStringPattern();
+                        break;
+                    case NONEMPTY_STRING:
+                        templatePattern = t.getAlphabet().getNonEmptyStringPattern();
+                        break;
+                    default:
+                        templatePattern = "";
+                }
+
+                pattern = command.getExecutePattern();
+                pattern = pattern.replaceAll(String.valueOf(t.getAlias()),
+                                             String.format("(?<%1$c>%2$s)", t.getAlias(), templatePattern));
+
+                replacement = command.getExecuteReplacement();
+                replacement = replacement.replaceAll(String.valueOf(t.getAlias()),
+                                                     String.format("\\${%1$c}", t.getAlias()));
+
+                command.setExecutePattern(pattern);
+                command.setExecuteReplacement(replacement);
+            }
+        }
+        command.canExecute(true);
+    }
+
+    private boolean isSuitableCommand(MarkovCommand command) {
+
+        return Pattern.compile(command.getExecutePattern()).matcher(markovString.getString()).find();
+
+    }
+
+    private String protectFromMetaSymbols(String str) {
+
+        String result = "";
+        for (int i = 0; i < str.length(); i++) {
+
+            if( isMetaSymbol(str.charAt(i)) ) {
+                result += "\\";
+            }
+            result += str.charAt(i);
+        }
+        return result;
     }
 }

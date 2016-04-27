@@ -2,10 +2,16 @@ package URM;
 
 import interpreter.*;
 
+/**
+ * Implements Unlimited Register Machine
+ */
 public class UrmInterpreter extends Interpreter {
 
+    /**Points to current execution command*/
     private UrmCommandIndex index;
+    /**Saves current states of registers*/
     private UrmConfiguration registerState;
+    /**Indicates that next command isn't finish*/
     private boolean hasNextCommand;
 
     public UrmInterpreter() {
@@ -15,17 +21,20 @@ public class UrmInterpreter extends Interpreter {
         this.hasNextCommand = false;
     }
 
+    /**{@inheritDoc}*/
     @Override
     public void setInput(Configuration input) {
         this.registerState = (UrmConfiguration) input.getInstance();
     }
 
+    /**{@inheritDoc}*/
     @Override
     protected Command getFirstCommand() {
 
         return (registerState != null) ? program.getCommand(index) : new StopCommand();
     }
 
+    /**{@inheritDoc}*/
     @Override
     protected Command nextCommand() {
 
@@ -34,7 +43,7 @@ public class UrmInterpreter extends Interpreter {
         }
         hasNextCommand = false;
 
-        if(index.getIndex() >= program.getCommandNumber() ) {
+        if(index.getIndex() >= program.getNumberOfCommands() ) {
             return new StopCommand();
         }
         else {
@@ -42,7 +51,7 @@ public class UrmInterpreter extends Interpreter {
         }
     }
 
-
+    /**{@inheritDoc}*/
     @Override
     protected void execute(Command c) {
 

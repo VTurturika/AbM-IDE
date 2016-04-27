@@ -2,12 +2,17 @@ package turing;
 
 import interpreter.*;
 
+/**
+ * Implements command for Turing Machine
+ */
 public class TuringCommand extends Command {
 
+    /**saves result part of command*/
     private int stateAfter;
     private char symbolAfter;
     private Direction direction;
 
+    /**saves input part of commmand*/
     private TuringCommandIndex before;
 
     public TuringCommand(int stateBefore, char symbolBefore, int stateAfter, char symbolAfter, Direction direction) {
@@ -49,6 +54,14 @@ public class TuringCommand extends Command {
 
     public void setBefore(TuringCommandIndex before) {
         this.before = before;
+    }
+
+    public void setStateBefore(int stateBefore) {
+        before.setState(stateBefore);
+    }
+
+    public void setSymbolBefore(char symbolBefore) {
+        before.setSymbol(symbolBefore);
     }
 
     @Override

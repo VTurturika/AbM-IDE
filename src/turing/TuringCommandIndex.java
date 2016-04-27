@@ -2,8 +2,14 @@ package turing;
 
 import interpreter.CommandIndex;
 
+/**
+ * Implements {@code CommandIndex} for {@code TuringProgram}
+ */
 public class TuringCommandIndex extends CommandIndex {
 
+    /**
+     * Allows get gCommand from Program using state and symbol of tape
+     */
     private int state;
     private char symbol;
 

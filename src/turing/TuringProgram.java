@@ -4,6 +4,7 @@ import interpreter.*;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class TuringProgram implements Program {
 
@@ -33,7 +34,7 @@ public class TuringProgram implements Program {
     }
 
     @Override
-    public int getCommandNumber() {
+    public int getNumberOfCommands() {
         return program.size();
     }
 
@@ -47,5 +48,23 @@ public class TuringProgram implements Program {
         }
 
         return result;
+    }
+
+    @Override
+    public Iterator<Command> iterator() {
+        return new Iterator<Command>() {
+
+            private Iterator<TuringCommand> iter = program.values().iterator();
+
+            @Override
+            public boolean hasNext() {
+               return iter.hasNext();
+            }
+
+            @Override
+            public Command next() {
+                return iter.next();
+            }
+        };
     }
 }
