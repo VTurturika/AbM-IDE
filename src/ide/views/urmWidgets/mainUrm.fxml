@@ -6,29 +6,30 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="500.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ide.views.urmWidgets.UrmWidgetController">
-   <content>
-      <HBox fx:id="registersContainer">
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ide.views.urmWidgets.UrmWidgetController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="100.0" spacing="10.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="150.0" prefWidth="100.0" spacing="10.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="+" onAction="#addRegister">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="-" onAction="#deleteRegister">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefWidth="50.0" text="Clear" onAction="#clearRegisters"/>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
+            <Button mnemonicParsing="false" onAction="#addRegister" prefHeight="20.0" prefWidth="50.0" text="+">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#deleteRegister" prefHeight="20.0" prefWidth="50.0" text="-">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#clearRegisters" prefWidth="50.0" text="Clear" />
          </children>
-      </HBox>
-   </content>
-</ScrollPane>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" vbarPolicy="NEVER">
+         <content>
+            <HBox fx:id="registersContainer" prefHeight="150.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>

@@ -27,6 +27,17 @@ public class UrmWidgetController implements Initializable {
 
             ((Label)register.getChildren().get(1)).setText(String.valueOf(registersCount++));
 
+            TextField registerValue = (TextField) register.getChildren().get(0);
+
+            TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+                String text = change.getText();
+                if (text.matches("[0-9]*")) {
+                    return change;
+                }
+                return null;
+            });
+
+            registerValue.setTextFormatter(textFormatter);
             registersContainer.getChildren().add(register);
         }
         catch(Exception e) {
@@ -37,7 +48,7 @@ public class UrmWidgetController implements Initializable {
     @FXML
     private void deleteRegister(ActionEvent event) {
         if(registersCount > 1) {
-            registersContainer.getChildren().remove(registersCount--);
+            registersContainer.getChildren().remove(--registersCount);
         }
     }
 
@@ -46,7 +57,7 @@ public class UrmWidgetController implements Initializable {
 
         VBox register;
 
-        for (int i =1; i<= registersCount; i++) {
+        for (int i = 0; i< registersCount; i++) {
               register = (VBox) registersContainer.getChildren().get(i);
             ((TextField)register.getChildren().get(0)).setText("0");
         }
