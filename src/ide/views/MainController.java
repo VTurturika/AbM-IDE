@@ -17,7 +17,11 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            ScrollPane urmWidget = FXMLLoader.load(getClass().getResource("../views/urmWidgets/mainUrm.fxml"));
+            HBox urmWidget = FXMLLoader.load(getClass().getResource("../views/urmWidgets/container.fxml"));
+
+            ScrollPane scrollPane = (ScrollPane) urmWidget.getChildren().get(1);
+            scrollPane.setPrefWidth(configWidget.getPrefWidth() - 100);
+
             urmWidget.setPrefWidth(configWidget.getPrefWidth());
             configWidget.getChildren().add(urmWidget);
         }
