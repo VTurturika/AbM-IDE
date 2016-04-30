@@ -23,7 +23,7 @@
             </Button>
          </children>
       </VBox>
-      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="300.0" vbarPolicy="NEVER">
+      <ScrollPane onKeyPressed="#moveHead" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="300.0" vbarPolicy="NEVER">
          <content>
             <HBox fx:id="cellContainer" alignment="CENTER" prefHeight="150.0" prefWidth="200.0" spacing="5.0">
                <padding>

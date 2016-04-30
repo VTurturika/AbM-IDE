@@ -5,11 +5,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" minWidth="50.0" prefHeight="150.0" prefWidth="50.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" minWidth="50.0" prefHeight="150.0" prefWidth="50.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField alignment="CENTER" prefHeight="50.0" prefWidth="50.0" />
    </children>
    <padding>
-      <Insets bottom="10.0" />
+      <Insets bottom="5.0" top="5.0" />
    </padding>
 </VBox>
