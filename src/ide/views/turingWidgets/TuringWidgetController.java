@@ -137,7 +137,6 @@ public class TuringWidgetController implements Initializable {
     @FXML
     private void moveHead(KeyEvent event) {
 
-
         switch (event.getCode()) {
             case RIGHT:
                 if(indexOfCurrentCell < cellContainer.getChildren().size()-1) {

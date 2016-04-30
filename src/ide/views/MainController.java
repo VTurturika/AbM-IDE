@@ -16,13 +16,13 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadTuringWidget();
+        loadMarkovWidget();
     }
 
     private void loadUrmWidget() {
 
         try {
-            HBox urmWidget = FXMLLoader.load(getClass().getResource("urmWidgets/urmMain.fxml"));
+            HBox urmWidget = FXMLLoader.load(getClass().getResource("./urmWidgets/urmMain.fxml"));
 
             ScrollPane scrollPane = (ScrollPane) urmWidget.getChildren().get(1);
             scrollPane.setPrefWidth(configWidget.getPrefWidth() - 100);
@@ -38,7 +38,7 @@ public class MainController implements Initializable {
     private void loadTuringWidget() {
 
         try {
-            HBox turingWidget = FXMLLoader.load(getClass().getResource("turingWidgets/turingTape.fxml"));
+            HBox turingWidget = FXMLLoader.load(getClass().getResource("./turingWidgets/turingTape.fxml"));
 
             HBox cellContainer = (HBox) ((ScrollPane)turingWidget.getChildren().get(1)).getContent();
             cellContainer.setPrefWidth(configWidget.getPrefWidth() - 200);
@@ -48,6 +48,20 @@ public class MainController implements Initializable {
             turingWidget.setPrefWidth(configWidget.getPrefWidth());
 
             configWidget.getChildren().add(turingWidget);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadMarkovWidget() {
+
+        try {
+            VBox markovWidget = FXMLLoader.load(getClass().getResource("./markovWidgets/markovWidget.fxml"));
+
+            markovWidget.setPrefWidth(configWidget.getPrefWidth());
+            configWidget.getChildren().add(markovWidget);
+
         }
         catch (Exception e) {
             e.printStackTrace();
