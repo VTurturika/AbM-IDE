@@ -26,6 +26,7 @@
             <Insets />
          </HBox.margin>
       </VBox>
+      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" vbarPolicy="NEVER" vmax="0.0" HBox.hgrow="ALWAYS">
          <content>
             <HBox fx:id="registersContainer" prefHeight="150.0" />
          </content>

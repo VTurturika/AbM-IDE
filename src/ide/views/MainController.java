@@ -16,8 +16,13 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        loadTuringWidget();
+    }
+
+    private void loadUrmWidget() {
+
         try {
-            HBox urmWidget = FXMLLoader.load(getClass().getResource("../views/urmWidgets/container.fxml"));
+            HBox urmWidget = FXMLLoader.load(getClass().getResource("urmWidgets/urmMain.fxml"));
 
             ScrollPane scrollPane = (ScrollPane) urmWidget.getChildren().get(1);
             scrollPane.setPrefWidth(configWidget.getPrefWidth() - 100);
@@ -28,6 +33,24 @@ public class MainController implements Initializable {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    private void loadTuringWidget() {
+
+        try {
+            HBox turingWidget = FXMLLoader.load(getClass().getResource("turingWidgets/turingTape.fxml"));
+
+            HBox cellContainer = (HBox) ((ScrollPane)turingWidget.getChildren().get(1)).getContent();
+            cellContainer.setPrefWidth(configWidget.getPrefWidth() - 200);
+
+            ScrollPane scrollPane = (ScrollPane)turingWidget.getChildren().get(1);
+            scrollPane.setPrefWidth(configWidget.getPrefWidth() - 190);
+            turingWidget.setPrefWidth(configWidget.getPrefWidth());
+
+            configWidget.getChildren().add(turingWidget);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
