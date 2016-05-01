@@ -48,12 +48,12 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Button" />
+          <Button onAction="#readFromFile" mnemonicParsing="false" text="Open" />
         </items>
       </ToolBar>
       <HBox VBox.vgrow="ALWAYS">
          <children>
-            <TextArea prefHeight="320.0" prefWidth="451.0" />
+            <Pane fx:id="codeEditor" prefHeight="268.0" prefWidth="470.0" />
          </children>
       </HBox>
       <Pane fx:id="configWidget" minHeight="150.0" prefHeight="167.0" prefWidth="700.0" />

@@ -1,22 +1,34 @@
 package ide.views;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.StyleSpansBuilder;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
     @FXML Pane configWidget;
+    @FXML Pane codeEditor;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadMarkovWidget();
+        loadCodeEditor();
+        loadUrmWidget();
     }
 
     private void loadUrmWidget() {
@@ -61,10 +73,57 @@ public class MainController implements Initializable {
 
             markovWidget.setPrefWidth(configWidget.getPrefWidth());
             configWidget.getChildren().add(markovWidget);
-
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void loadCodeEditor() {
+
+        CodeArea codeArea = new CodeArea();
+        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+
+        codeArea.setPrefWidth(codeEditor.getPrefWidth());
+        codeArea.setPrefHeight(codeEditor.getPrefHeight());
+
+        //codeArea.richChanges().subscribe(change -> System.out.println(codeArea.getCaretPosition()));
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+
+        codeEditor.getChildren().add(codeArea);
+    }
+
+    @FXML
+    private void readFromFile(ActionEvent event) {
+
+        final FileChooser fileChooser = new FileChooser();
+        Stage stage = (Stage) codeEditor.getScene().getWindow();
+        CodeArea codeArea = (CodeArea) codeEditor.getChildren().get(0);
+
+
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        File file = fileChooser.showOpenDialog(stage);
+        if(file != null) {
+
+            String temp;
+            codeArea.clear();
+
+            try {
+                FileReader fileReader = new FileReader(file.getAbsolutePath());
+                BufferedReader reader = new BufferedReader(fileReader);
+                while( (temp = reader.readLine() )!= null ) {
+
+                    if(!temp.equals("")) {
+                        codeArea.appendText(temp + "\n");
+                    }
+                }
+                fileReader.close();
+                reader.close();
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+                codeArea.clear();
+            }
         }
     }
 }
