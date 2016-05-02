@@ -48,7 +48,9 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button onAction="#readFromFile" mnemonicParsing="false" text="Open" />
+          <Button mnemonicParsing="false" onAction="#readFromFile" text="Open" />
+          <Button mnemonicParsing="false" onAction="#test" text="Test" />
+          <ComboBox fx:id="modeSwitcher" onAction="#switchIde" prefWidth="150.0" />
         </items>
       </ToolBar>
       <HBox VBox.vgrow="ALWAYS">
@@ -56,6 +58,6 @@
             <Pane fx:id="codeEditor" prefHeight="268.0" prefWidth="470.0" />
          </children>
       </HBox>
-      <Pane fx:id="configWidget" minHeight="150.0" prefHeight="167.0" prefWidth="700.0" />
+      <Pane fx:id="configWidget" minHeight="150.0" prefHeight="150.0" prefWidth="700.0" />
   </children>
 </VBox>

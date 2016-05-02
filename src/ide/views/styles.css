@@ -1,0 +1,25 @@
+.test, .arrow {
+    -fx-fill: blue;
+}
+
+.comment {
+    -fx-fill: cadetblue;
+}
+
+.commandNumber {
+    -fx-fill: blue;
+}
+
+.commandType, .direction, .emptySymbol, .arrowWithDot {
+    -fx-fill: red;
+}
+
+.state {
+    -fx-fill: brown;
+}
+
+.symbol {
+    -fx-fill: orange;
+}
+
+

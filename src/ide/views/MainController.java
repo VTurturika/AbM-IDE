@@ -1,5 +1,7 @@
 package ide.views;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.WeakChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -7,25 +9,30 @@ import javafx.scene.layout.*;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
-import org.fxmisc.richtext.StyleSpansBuilder;
+import org.fxmisc.richtext.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
     @FXML Pane configWidget;
     @FXML Pane codeEditor;
+    @FXML ComboBox<String> modeSwitcher;
+
+    private CodeArea codeArea = new CodeArea();
+    private CodeHighlighter highlighter = new CodeHighlighter();
+    private ChangeListener<? super String> currentListener = (observable, oldValue, newValue) -> {};
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
+        modeSwitcher.setValue("URM");
+        switchIde(null);
 
         loadCodeEditor();
         loadUrmWidget();
@@ -81,28 +88,30 @@ public class MainController implements Initializable {
 
     private void loadCodeEditor() {
 
-        CodeArea codeArea = new CodeArea();
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-
         codeArea.setPrefWidth(codeEditor.getPrefWidth());
         codeArea.setPrefHeight(codeEditor.getPrefHeight());
 
-        //codeArea.richChanges().subscribe(change -> System.out.println(codeArea.getCaretPosition()));
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        codeArea.richChanges().subscribe(change -> {
 
+            if(codeEditor.getScene().getStylesheets().size() == 0) {
+                codeEditor.getScene().getStylesheets().add("file://" + getClass().getResource("./styles.css").getPath());
+            }
+            //codeHighlighter.highlightUrmCode(codeArea);
+        });
         codeEditor.getChildren().add(codeArea);
+
     }
 
     @FXML
     private void readFromFile(ActionEvent event) {
 
-        final FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         Stage stage = (Stage) codeEditor.getScene().getWindow();
-        CodeArea codeArea = (CodeArea) codeEditor.getChildren().get(0);
-
 
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         File file = fileChooser.showOpenDialog(stage);
+
         if(file != null) {
 
             String temp;
@@ -111,19 +120,63 @@ public class MainController implements Initializable {
             try {
                 FileReader fileReader = new FileReader(file.getAbsolutePath());
                 BufferedReader reader = new BufferedReader(fileReader);
-                while( (temp = reader.readLine() )!= null ) {
 
-                    if(!temp.equals("")) {
-                        codeArea.appendText(temp + "\n");
-                    }
+                while( (temp = reader.readLine() )!= null ) {
+                     codeArea.appendText(temp + "\n");
                 }
                 fileReader.close();
                 reader.close();
             }
-            catch (IOException e) {
+            catch (Exception e) {
                 System.out.println(e.getMessage());
                 codeArea.clear();
             }
         }
+    }
+
+    @FXML
+    private void test(ActionEvent event) {
+
+        codeEditor.getScene().getStylesheets().add("file://" + getClass().getResource("./styles.css").getPath());
+        CodeHighlighter highlighter = new CodeHighlighter();
+        highlighter.highlightMarkovCode(codeArea);
+    }
+
+    @FXML
+    private void switchIde(ActionEvent event) {
+
+        configWidget.getChildren().clear();
+        codeArea.clear();
+
+        ChangeListener<? super String> urmListener = (observable, oldValue, newValue) -> {
+            highlighter.highlightUrmCode(codeArea);
+        };
+
+        ChangeListener<? super String> turingListener = (observable, oldValue, newValue) -> {
+            highlighter.highlightTuringCode(codeArea);
+        };
+
+        ChangeListener<? super String> markovListener = (observable, oldValue, newValue) -> {
+            highlighter.highlightMarkovCode(codeArea);
+        };
+
+        codeArea.textProperty().removeListener(currentListener);
+
+        switch (modeSwitcher.getValue()) {
+            case "URM":
+                loadUrmWidget();
+                currentListener = urmListener;
+                break;
+            case "Turing":
+                loadTuringWidget();
+                currentListener = turingListener;
+                break;
+            case "Markov":
+                loadMarkovWidget();
+                currentListener = markovListener;
+                break;
+        }
+
+        codeArea.textProperty().addListener(currentListener);
     }
 }
