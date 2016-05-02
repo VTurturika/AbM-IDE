@@ -2,8 +2,10 @@ package ide.views.helpers;
 
 import ide.logic.alphabet.EmptySymbol;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.Paragraph;
 import org.fxmisc.richtext.StyleSpansBuilder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -32,20 +34,36 @@ public class CodeHighlighter {
     private Pattern markovPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s)",
                                                    COMMENT,ARROW_WITH_DOT,ARROW,EMPTY_SYMBOL,SYMBOL ));
 
+    public void highlightLine(CodeArea code, String type, int lineNumber) {
 
-    public void highlightUrmCode(CodeArea code) {
+        int currentParagraph =  (lineNumber == 0) ? code.getCurrentParagraph() : lineNumber;
+        int position = paragraphStartPosition(code, currentParagraph);
+        String text = code.getText(currentParagraph);
 
-        code.clearStyle(0, code.getText().length());
+        if(!text.equals("")) {
 
-        Matcher matcher = urmPattern.matcher(code.getText());
+            Matcher matcher = getMatcher(type, text);
+            code.clearStyle(currentParagraph);
+
+            while(matcher.find()) {
+                String styleClass = getStyle(type, matcher);
+                code.setStyleClass(position + matcher.start(), position + matcher.end(), styleClass);
+            }
+        }
+    }
+
+    public void highlightLine(CodeArea code, String type) {
+        highlightLine(code, type, 0);
+    }
+
+    public void highlightAllCode(CodeArea code, String type) {
+
+        Matcher matcher = getMatcher(type, code.getText());
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
 
         while(matcher.find()) {
-            String styleClass = matcher.group("comment") != null ? "comment" :
-                                matcher.group("commandNumber") != null ? "commandNumber" :
-                                matcher.group("commandType") != null ? "commandType" : null;
-
+            String styleClass = getStyle(type, matcher);
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
@@ -55,50 +73,50 @@ public class CodeHighlighter {
         code.setStyleSpans(0, spansBuilder.create());
     }
 
-    public void highlightTuringCode(CodeArea code) {
+    private int paragraphStartPosition(CodeArea text, int paragraph) {
 
-        code.clearStyle(0, code.getText().length());
-
-        Matcher matcher = turingPattern.matcher(code.getText());
-        int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-
-        while(matcher.find()) {
-            String styleClass = matcher.group("comment") != null ? "comment" :
-                                matcher.group("state") != null ? "state" :
-                                matcher.group("direction") != null ? "direction" :
-                                matcher.group("arrow") != null ? "arrow" :
-                                matcher.group("empty") != null ? "emptySymbol" :
-                                matcher.group("symbol") != null ? "symbol" : null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
+        int position = 0;
+        for (int i = 0; i <paragraph ; i++) {
+            position += text.getText(i).length() + 1;
         }
-        spansBuilder.add(Collections.emptyList(), code.getText().length() - lastKwEnd);
-
-        code.setStyleSpans(0, spansBuilder.create());
+        return position;
     }
 
-    public void highlightMarkovCode(CodeArea code) {
+    private String getStyle(String type, Matcher matcher) {
 
-        code.clearStyle(0, code.getText().length());
-
-        Matcher matcher = markovPattern.matcher(code.getText());
-        int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-
-        while(matcher.find()) {
-            String styleClass = matcher.group("comment") != null ? "comment" :
-                                matcher.group("arrowWithDot") != null ? "arrowWithDot" :
-                                matcher.group("arrow") != null ? "arrow" :
-                                matcher.group("empty") != null ? "emptySymbol" :
-                                matcher.group("symbol") != null ? "symbol" : null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
+        switch (type) {
+            case "URM" :
+                return matcher.group("comment") != null ? "comment" :
+                       matcher.group("commandNumber") != null ? "commandNumber" :
+                       matcher.group("commandType") != null ? "commandType" : null;
+            case "Turing" :
+                return matcher.group("comment") != null ? "comment" :
+                       matcher.group("state") != null ? "state" :
+                       matcher.group("direction") != null ? "direction" :
+                       matcher.group("arrow") != null ? "arrow" :
+                       matcher.group("empty") != null ? "emptySymbol" :
+                       matcher.group("symbol") != null ? "symbol" : null;
+            case "Markov" :
+                return matcher.group("comment") != null ? "comment" :
+                       matcher.group("arrowWithDot") != null ? "arrowWithDot" :
+                       matcher.group("arrow") != null ? "arrow" :
+                       matcher.group("empty") != null ? "emptySymbol" :
+                       matcher.group("symbol") != null ? "symbol" : null;
+            default:
+                return null;
         }
-        spansBuilder.add(Collections.emptyList(), code.getText().length() - lastKwEnd);
+    }
 
-        code.setStyleSpans(0, spansBuilder.create());
+    private Matcher getMatcher(String type, String text) {
+        switch (type) {
+            case "URM" :
+                return urmPattern.matcher(text);
+            case "Turing" :
+                return turingPattern.matcher(text);
+            case "Markov" :
+                return markovPattern.matcher(text);
+            default:
+                return null;
+        }
     }
 }

@@ -31,18 +31,26 @@ public class MainController implements Initializable {
     private ChangeListener<? super String> currentListener = (observable, oldValue, newValue) -> {};
 
     private ChangeListener<? super String> urmListener = (observable, oldValue, newValue) -> {
-        highlighter.highlightUrmCode(codeArea);
-        System.out.println(analyzer.analyzeCode(codeArea, "URM"));
+
+        //  System.out.println(codeArea.getParagraph( codeArea.getCurrentParagraph() ));
+
+        //System.out.println(analyzer.analyzeCode(codeArea, "URM"));
     };
 
     private ChangeListener<? super String> turingListener = (observable, oldValue, newValue) -> {
-        highlighter.highlightTuringCode(codeArea);
-        System.out.println(analyzer.analyzeCode(codeArea, "Turing"));
+
+        System.out.println("turingListener");
+
+//        highlighter.highlightTuringCode(codeArea);
+//        System.out.println(analyzer.analyzeCode(codeArea, "Turing"));
     };
 
     private ChangeListener<? super String> markovListener = (observable, oldValue, newValue) -> {
-        highlighter.highlightMarkovCode(codeArea);
-        System.out.println(analyzer.analyzeCode(codeArea, "Markov"));
+
+        System.out.println("markovListener");
+
+//        highlighter.highlightMarkovCode(codeArea);
+//        System.out.println(analyzer.analyzeCode(codeArea, "Markov"));
     };
 
     @Override
@@ -109,6 +117,17 @@ public class MainController implements Initializable {
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.setPrefWidth(codeEditor.getPrefWidth());
         codeArea.setPrefHeight(codeEditor.getPrefHeight());
+
+        codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if( newValue - oldValue > 1 ) {
+                highlighter.highlightAllCode(codeArea, modeSwitcher.getValue());
+            }
+        });
+
+        codeArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            highlighter.highlightLine(codeArea, modeSwitcher.getValue());
+        });
+
         codeEditor.getChildren().add(codeArea);
     }
 
@@ -131,7 +150,8 @@ public class MainController implements Initializable {
                 BufferedReader reader = new BufferedReader(fileReader);
 
                 while( (temp = reader.readLine() )!= null ) {
-                     codeArea.appendText(temp + "\n");
+                    codeArea.appendText(temp + "\n");
+                    highlighter.highlightLine(codeArea, modeSwitcher.getValue());
                 }
                 fileReader.close();
                 reader.close();
@@ -156,23 +176,17 @@ public class MainController implements Initializable {
         configWidget.getChildren().clear();
         codeArea.clear();
 
-        codeArea.textProperty().removeListener(currentListener);
-
         switch (modeSwitcher.getValue()) {
             case "URM":
                 loadUrmWidget();
-                currentListener = urmListener;
                 break;
             case "Turing":
                 loadTuringWidget();
-                currentListener = turingListener;
                 break;
             case "Markov":
                 loadMarkovWidget();
-                currentListener = markovListener;
                 break;
         }
 
-        codeArea.textProperty().addListener(currentListener);
     }
 }
