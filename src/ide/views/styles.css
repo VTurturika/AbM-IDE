@@ -22,4 +22,10 @@
     -fx-fill: orange;
 }
 
+.error {
+    -fx-fill: red;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
 

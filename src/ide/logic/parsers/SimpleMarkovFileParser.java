@@ -34,8 +34,8 @@ public class SimpleMarkovFileParser extends SimpleFileParser {
         if (matcher.find()) {
 
             if (matcher.group("command") != null) {
-                String pattern = createPartOfCommand(matcher.group(2));
-                String replacement = createPartOfCommand(matcher.group(4));
+                String pattern = matcher.group(2);
+                String replacement = matcher.group(4);
                 boolean isFinishCommand = (matcher.group(3) != null);
 
                 if (parser.hasTemplateSymbolDefinition(str)) {
@@ -66,10 +66,4 @@ public class SimpleMarkovFileParser extends SimpleFileParser {
 
         throw new IllegalArgumentException("Error of parsing command");
     }
-
-    private String createPartOfCommand(String str) {
-
-        return str.equals("$") ? "" : str;
-    }
-
 }

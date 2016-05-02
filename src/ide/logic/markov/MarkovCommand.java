@@ -101,4 +101,9 @@ public class MarkovCommand extends Command implements Iterable<TemplateSymbol> {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return getPattern() + (isFinishCommand() ? " ->. " : " -> ") + getReplacement();
+    }
 }

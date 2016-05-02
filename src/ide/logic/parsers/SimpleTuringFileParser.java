@@ -8,9 +8,13 @@ import java.util.regex.Pattern;
 
 public class SimpleTuringFileParser extends SimpleFileParser {
 
+    private static final String turingCommand =
+                                "q\\s?(\\d+)\\s?([\\S])\\s?->\\s?q\\s?((\\d+)|(\\*))\\s?([\\S])(\\s?([RL]))?";
+
     public SimpleTuringFileParser(String filename) {
         super(filename);
-        this.commandPattern = Pattern.compile("q\\s?(\\d+)\\s?([\\S])\\s?->\\s?q\\s?((\\d+)|(\\*))\\s?([\\S])(\\s?([RL]))?");
+        this.commandPattern = Pattern.compile(
+                              String.format("(?<command>%1$s(\\s*%2$s)?)|(?<comment>%2$s)", turingCommand, comment));
         this.program = new TuringProgram();
     }
 
@@ -22,18 +26,23 @@ public class SimpleTuringFileParser extends SimpleFileParser {
     public Command parseCommand(String str) {
         Matcher matcher = commandPattern.matcher(str);
         if(matcher.find()) {
-            int stateBefore = createState(matcher.group(1));
-            char symbolBefore = matcher.group(2).charAt(0);
-            int stateAfter = createState(matcher.group(3));
-            char symbolAfter = matcher.group(6).charAt(0);
-            Direction direction = createDirection(matcher.group(8));
 
-            return new TuringCommand(stateBefore, symbolBefore, stateAfter, symbolAfter, direction);
-        }
-        else {
-            throw new IllegalArgumentException("Error of parsing command");
+            if(matcher.group("command") != null ) {
+
+                int stateBefore = createState(matcher.group(2));
+                char symbolBefore = matcher.group(3).charAt(0);
+                int stateAfter = createState(matcher.group(4));
+                char symbolAfter = matcher.group(7).charAt(0);
+                Direction direction = createDirection(matcher.group(9));
+
+                return new TuringCommand(stateBefore, symbolBefore, stateAfter, symbolAfter, direction);
+            }
+            else if(matcher.group("comment") != null) {
+                return null;
+            }
         }
 
+        throw new IllegalArgumentException("Error of parsing command");
     }
 
     private int createState(String str) {

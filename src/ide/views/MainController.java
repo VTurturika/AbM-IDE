@@ -1,7 +1,8 @@
 package ide.views;
 
+import ide.views.helpers.CodeAnalyzer;
+import ide.views.helpers.CodeHighlighter;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -25,7 +26,24 @@ public class MainController implements Initializable {
 
     private CodeArea codeArea = new CodeArea();
     private CodeHighlighter highlighter = new CodeHighlighter();
+    private CodeAnalyzer analyzer = new CodeAnalyzer();
+
     private ChangeListener<? super String> currentListener = (observable, oldValue, newValue) -> {};
+
+    private ChangeListener<? super String> urmListener = (observable, oldValue, newValue) -> {
+        highlighter.highlightUrmCode(codeArea);
+        System.out.println(analyzer.analyzeCode(codeArea, "URM"));
+    };
+
+    private ChangeListener<? super String> turingListener = (observable, oldValue, newValue) -> {
+        highlighter.highlightTuringCode(codeArea);
+        System.out.println(analyzer.analyzeCode(codeArea, "Turing"));
+    };
+
+    private ChangeListener<? super String> markovListener = (observable, oldValue, newValue) -> {
+        highlighter.highlightMarkovCode(codeArea);
+        System.out.println(analyzer.analyzeCode(codeArea, "Markov"));
+    };
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,16 +109,7 @@ public class MainController implements Initializable {
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.setPrefWidth(codeEditor.getPrefWidth());
         codeArea.setPrefHeight(codeEditor.getPrefHeight());
-
-        codeArea.richChanges().subscribe(change -> {
-
-            if(codeEditor.getScene().getStylesheets().size() == 0) {
-                codeEditor.getScene().getStylesheets().add("file://" + getClass().getResource("./styles.css").getPath());
-            }
-            //codeHighlighter.highlightUrmCode(codeArea);
-        });
         codeEditor.getChildren().add(codeArea);
-
     }
 
     @FXML
@@ -137,9 +146,8 @@ public class MainController implements Initializable {
     @FXML
     private void test(ActionEvent event) {
 
-        codeEditor.getScene().getStylesheets().add("file://" + getClass().getResource("./styles.css").getPath());
-        CodeHighlighter highlighter = new CodeHighlighter();
-        highlighter.highlightMarkovCode(codeArea);
+        analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
+
     }
 
     @FXML
@@ -147,18 +155,6 @@ public class MainController implements Initializable {
 
         configWidget.getChildren().clear();
         codeArea.clear();
-
-        ChangeListener<? super String> urmListener = (observable, oldValue, newValue) -> {
-            highlighter.highlightUrmCode(codeArea);
-        };
-
-        ChangeListener<? super String> turingListener = (observable, oldValue, newValue) -> {
-            highlighter.highlightTuringCode(codeArea);
-        };
-
-        ChangeListener<? super String> markovListener = (observable, oldValue, newValue) -> {
-            highlighter.highlightMarkovCode(codeArea);
-        };
 
         codeArea.textProperty().removeListener(currentListener);
 

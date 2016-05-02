@@ -1,10 +1,12 @@
 package ide.logic.markov;
 
+import ide.logic.alphabet.EmptySymbol;
 import ide.logic.alphabet.TemplateSymbol;
 import ide.logic.interpreter.Command;
 import ide.logic.interpreter.Configuration;
 import ide.logic.interpreter.Interpreter;
 import ide.logic.interpreter.StopCommand;
+import ide.views.markovWidgets.MarkovWidgetController;
 
 import java.util.regex.Pattern;
 
@@ -124,6 +126,10 @@ public class MarkovInterpreter extends Interpreter {
 
         String result = "";
         for (int i = 0; i < str.length(); i++) {
+
+            if(str.charAt(i) == EmptySymbol.get()) {
+                continue;
+            }
 
             if( isMetaSymbol(str.charAt(i)) ) {
                 result += "\\";

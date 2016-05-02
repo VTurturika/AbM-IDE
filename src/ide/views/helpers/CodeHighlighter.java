@@ -1,4 +1,4 @@
-package ide.views;
+package ide.views.helpers;
 
 import ide.logic.alphabet.EmptySymbol;
 import org.fxmisc.richtext.CodeArea;
@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 public class CodeHighlighter {
 
-
     private static final String COMMENT = "(?<comment>\\/\\/.*)";
     private static final String URM_COMMAND_NUMBERS = "(?<commandNumber>(^|\\n)\\d+[\\)\\.])";
     private static final String URM_COMMAND_TYPE = "(?<commandType>[zZsStTjJ])";
@@ -19,7 +18,24 @@ public class CodeHighlighter {
     private Pattern urmPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s)",
                                                  COMMENT, URM_COMMAND_NUMBERS, URM_COMMAND_TYPE));
 
+    private static final String ARROW = "(?<arrow>\\-\\>)";
+    private static final String SYMBOL = "(?<symbol>\\S)";
+    private static final String EMPTY_SYMBOL = String.format("(?<empty>\\%1$c)", EmptySymbol.get());
+
+    private static final String TURING_STATE = "(?<state>q\\s?(\\d+)|(\\*))";
+    private static final String TURING_DIRECTION = "(?<direction>L|R)";
+
+    private Pattern turingPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s|%6$s)",
+                                                    COMMENT,TURING_STATE,TURING_DIRECTION,ARROW,EMPTY_SYMBOL,SYMBOL));
+
+    private static final String ARROW_WITH_DOT = "(?<arrowWithDot>\\-\\>\\.)";
+    private Pattern markovPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s)",
+                                                   COMMENT,ARROW_WITH_DOT,ARROW,EMPTY_SYMBOL,SYMBOL ));
+
+
     public void highlightUrmCode(CodeArea code) {
+
+        code.clearStyle(0, code.getText().length());
 
         Matcher matcher = urmPattern.matcher(code.getText());
         int lastKwEnd = 0;
@@ -39,17 +55,9 @@ public class CodeHighlighter {
         code.setStyleSpans(0, spansBuilder.create());
     }
 
-    private static final String ARROW = "(?<arrow>\\-\\>)";
-    private static final String SYMBOL = "(?<symbol>\\S)";
-    private static final String EMPTY_SYMBOL = String.format("(?<empty>\\%1$c)", EmptySymbol.get());
-
-    private static final String TURING_STATE = "(?<state>q\\s?(\\d+)|(\\*))";
-    private static final String TURING_DIRECTION = "(?<direction>L|R)";
-
-    private Pattern turingPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s|%6$s)",
-                                                   COMMENT,TURING_STATE,TURING_DIRECTION,ARROW,EMPTY_SYMBOL,SYMBOL));
-
     public void highlightTuringCode(CodeArea code) {
+
+        code.clearStyle(0, code.getText().length());
 
         Matcher matcher = turingPattern.matcher(code.getText());
         int lastKwEnd = 0;
@@ -71,12 +79,9 @@ public class CodeHighlighter {
         code.setStyleSpans(0, spansBuilder.create());
     }
 
-    private static final String ARROW_WITH_DOT = "(?<arrowWithDot>\\-\\>\\.)";
-    private Pattern markovPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s)",
-                                                        COMMENT,ARROW_WITH_DOT,ARROW,EMPTY_SYMBOL,SYMBOL ));
-
-
     public void highlightMarkovCode(CodeArea code) {
+
+        code.clearStyle(0, code.getText().length());
 
         Matcher matcher = markovPattern.matcher(code.getText());
         int lastKwEnd = 0;
