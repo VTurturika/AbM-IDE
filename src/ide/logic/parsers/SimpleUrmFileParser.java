@@ -27,7 +27,8 @@ public class SimpleUrmFileParser extends SimpleFileParser {
         Matcher matcher = commandPattern.matcher(str);
         if(matcher.find()) {
 
-            if(matcher.group("command") != null) {
+            if(matcher.group("command") != null && matcher.group(2) != null) {
+
                 String type = matcher.group(4).toLowerCase();
                 int firstArgument  = createArgument(matcher.group(5));
                 int secondArgument = createArgument(matcher.group(7));

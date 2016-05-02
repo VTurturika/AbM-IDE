@@ -2,7 +2,6 @@ package ide.views;
 
 import ide.views.helpers.CodeAnalyzer;
 import ide.views.helpers.CodeHighlighter;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -28,31 +27,6 @@ public class MainController implements Initializable {
     private CodeHighlighter highlighter = new CodeHighlighter();
     private CodeAnalyzer analyzer = new CodeAnalyzer();
 
-    private ChangeListener<? super String> currentListener = (observable, oldValue, newValue) -> {};
-
-    private ChangeListener<? super String> urmListener = (observable, oldValue, newValue) -> {
-
-        //  System.out.println(codeArea.getParagraph( codeArea.getCurrentParagraph() ));
-
-        //System.out.println(analyzer.analyzeCode(codeArea, "URM"));
-    };
-
-    private ChangeListener<? super String> turingListener = (observable, oldValue, newValue) -> {
-
-        System.out.println("turingListener");
-
-//        highlighter.highlightTuringCode(codeArea);
-//        System.out.println(analyzer.analyzeCode(codeArea, "Turing"));
-    };
-
-    private ChangeListener<? super String> markovListener = (observable, oldValue, newValue) -> {
-
-        System.out.println("markovListener");
-
-//        highlighter.highlightMarkovCode(codeArea);
-//        System.out.println(analyzer.analyzeCode(codeArea, "Markov"));
-    };
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -61,7 +35,6 @@ public class MainController implements Initializable {
         switchIde(null);
 
         loadCodeEditor();
-        loadUrmWidget();
     }
 
     private void loadUrmWidget() {
@@ -121,12 +94,14 @@ public class MainController implements Initializable {
         codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
             if( newValue - oldValue > 1 ) {
                 highlighter.highlightAllCode(codeArea, modeSwitcher.getValue());
+                analyzer.analyzeAllCode(codeArea, modeSwitcher.getValue());
+            }
+            else if( newValue - oldValue <= 1 ) {
+                highlighter.highlightLine(codeArea, modeSwitcher.getValue());
+                analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
             }
         });
 
-        codeArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            highlighter.highlightLine(codeArea, modeSwitcher.getValue());
-        });
 
         codeEditor.getChildren().add(codeArea);
     }
@@ -149,12 +124,15 @@ public class MainController implements Initializable {
                 FileReader fileReader = new FileReader(file.getAbsolutePath());
                 BufferedReader reader = new BufferedReader(fileReader);
 
+                String buffer = "";
+
                 while( (temp = reader.readLine() )!= null ) {
-                    codeArea.appendText(temp + "\n");
-                    highlighter.highlightLine(codeArea, modeSwitcher.getValue());
+                    buffer += temp + "\n";
                 }
                 fileReader.close();
                 reader.close();
+
+                codeArea.appendText(buffer);
             }
             catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -187,6 +165,5 @@ public class MainController implements Initializable {
                 loadMarkovWidget();
                 break;
         }
-
     }
 }

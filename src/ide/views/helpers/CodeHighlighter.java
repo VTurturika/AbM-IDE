@@ -2,10 +2,8 @@ package ide.views.helpers;
 
 import ide.logic.alphabet.EmptySymbol;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.Paragraph;
 import org.fxmisc.richtext.StyleSpansBuilder;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -37,11 +35,11 @@ public class CodeHighlighter {
     public void highlightLine(CodeArea code, String type, int lineNumber) {
 
         int currentParagraph =  (lineNumber == 0) ? code.getCurrentParagraph() : lineNumber;
-        int position = paragraphStartPosition(code, currentParagraph);
         String text = code.getText(currentParagraph);
 
         if(!text.equals("")) {
 
+            int position = paragraphStartPosition(code, currentParagraph);
             Matcher matcher = getMatcher(type, text);
             code.clearStyle(currentParagraph);
 

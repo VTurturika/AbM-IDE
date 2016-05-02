@@ -16,7 +16,7 @@ public class UrmInterpreterTest {
 
         SimpleFileParser parser = new SimpleUrmFileParser();
 
-        parser.setFilename(System.getProperty("user.dir") + "\\test\\ide.logic.URM\\programs\\test1.txt");
+        parser.setFilename(getClass().getResource("./programs/test1.txt").getPath());
         Program program = parser.getProgram();
 
         Configuration configuration = new UrmConfiguration(6);

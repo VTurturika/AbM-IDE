@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class CodeAnalyzer {
 
-    public Program analyzeCode(CodeArea code, String type) {
+    public Program analyzeAllCode(CodeArea code, String type) {
 
         int numOfRows = code.getParagraphs().size();
         SimpleFileParser parser = chooseParserType(type);
@@ -42,6 +42,29 @@ public class CodeAnalyzer {
         }
 
         return program;
+    }
+
+    public boolean analyzeCode(CodeArea code, String type) {
+
+        int currentParagraph = code.getCurrentParagraph();
+        String str = code.getText(currentParagraph);
+
+        if(!str.equals("")) {
+
+            SimpleFileParser parser = chooseParserType(type);
+
+            try {
+                parser.parseCommand(str);
+            }
+            catch (Exception e) {
+                ArrayList<String> errorStyle = new ArrayList<>();
+                errorStyle.add("error");
+                code.setStyle(currentParagraph, errorStyle);
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private Program chooseProgramType(String type) {
