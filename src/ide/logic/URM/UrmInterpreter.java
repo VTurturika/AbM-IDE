@@ -82,4 +82,12 @@ public class UrmInterpreter extends Interpreter {
 
         //System.out.println(registerState);
     }
+
+    @Override
+    public void reset() {
+        super.reset();
+
+        index.setIndex(0);
+        hasNextCommand = false;
+    }
 }

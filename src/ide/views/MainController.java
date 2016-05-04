@@ -1,16 +1,19 @@
 package ide.views;
 
-import ide.logic.markov.MarkovConfiguration;
+import ide.logic.interpreter.*;
+import ide.logic.URM.*;
+import ide.logic.turing.*;
+import ide.logic.markov.*;
+
 import ide.views.helpers.*;
-import ide.views.markovWidgets.MarkovWidgetController;
-import ide.views.markovWidgets.MarkovWidgetHelper;
-import ide.views.turingWidgets.*;
 import ide.views.urmWidgets.*;
+import ide.views.turingWidgets.*;
+import ide.views.markovWidgets.*;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.*;
@@ -26,6 +29,8 @@ public class MainController implements Initializable {
     @FXML Pane configWidget;
     @FXML Pane codeEditor;
     @FXML ComboBox<String> modeSwitcher;
+    @FXML Button runButton;
+    @FXML Button debugButton;
 
     private CodeArea codeArea = new CodeArea();
     private CodeHighlighter highlighter = new CodeHighlighter();
@@ -35,13 +40,16 @@ public class MainController implements Initializable {
     private TuringWidgetHelper turingHelper;
     private MarkovWidgetHelper markovHelper;
 
+    private Interpreter interpreter = null;
+    private Program program = null;
+    private boolean canExecute = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
-        modeSwitcher.setValue("Markov");
+        modeSwitcher.setValue("URM");
         switchIde(null);
-
         loadCodeEditor();
     }
 
@@ -58,6 +66,9 @@ public class MainController implements Initializable {
             urmWidget.setPrefWidth(configWidget.getPrefWidth());
 
             configWidget.getChildren().add(urmWidget);
+
+            interpreter = new UrmInterpreter();
+            interpreter.setInput( urmHelper.getMemoryRegisters() );
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -77,6 +88,9 @@ public class MainController implements Initializable {
             turingWidget.setPrefWidth(configWidget.getPrefWidth());
 
             configWidget.getChildren().add(turingWidget);
+
+            interpreter = new TuringInterpreter();
+            interpreter.setInput( turingHelper.getMemoryTape() );
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -94,6 +108,9 @@ public class MainController implements Initializable {
 
             markovWidget.setPrefWidth(configWidget.getPrefWidth());
             configWidget.getChildren().add(markovWidget);
+
+            interpreter = new MarkovInterpreter();
+            interpreter.setInput( markovHelper.getMemoryString() );
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -109,12 +126,13 @@ public class MainController implements Initializable {
         codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
             if( newValue - oldValue > 1 ) {
                 highlighter.highlightAllCode(codeArea, modeSwitcher.getValue());
-                analyzer.analyzeAllCode(codeArea, modeSwitcher.getValue());
+                canExecute = analyzer.analyzeAllCode(codeArea, modeSwitcher.getValue()) != null;
             }
             else if( newValue - oldValue <= 1 ) {
                 highlighter.highlightLine(codeArea, modeSwitcher.getValue());
-                analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
+                canExecute  = analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
             }
+            controlButtons();
         });
 
 
@@ -157,8 +175,25 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void test(ActionEvent event) {
+    private void run(ActionEvent event) {
 
+        if(canExecute) {
+
+            program = analyzer.analyzeAllCode(codeArea, modeSwitcher.getValue());
+            if(program != null) {
+
+                interpreter.loadProgram(program);
+                updateInput();
+
+                interpreter.runProgram();
+                interpreter.reset();
+
+                updateOutput();
+            }
+            else {
+                System.out.println("wrong program");
+            }
+        }
     }
 
     @FXML
@@ -166,6 +201,7 @@ public class MainController implements Initializable {
 
         configWidget.getChildren().clear();
         codeArea.clear();
+        canExecute = false;
 
         switch (modeSwitcher.getValue()) {
             case "URM":
@@ -176,6 +212,47 @@ public class MainController implements Initializable {
                 break;
             case "Markov":
                 loadMarkovWidget();
+                break;
+        }
+    }
+
+    private void controlButtons() {
+        if(canExecute) {
+            runButton.setDisable(false);
+            debugButton.setDisable(false);
+        }
+        else {
+            runButton.setDisable(true);
+            debugButton.setDisable(true);
+        }
+    }
+
+    private void updateInput() {
+
+        switch(modeSwitcher.getValue()) {
+            case "URM":
+                urmHelper.updateMemoryRegisters();
+                break;
+            case "Turing":
+                turingHelper.updateMemoryTape();
+                break;
+            case "Markov":
+                markovHelper.updateMemoryString();
+                break;
+        }
+    }
+
+    private void updateOutput() {
+
+        switch(modeSwitcher.getValue()) {
+            case "URM":
+                urmHelper.updateViewRegisters();
+                break;
+            case "Turing":
+                turingHelper.updateViewTape();
+                break;
+            case "Markov":
+                markovHelper.updateViewString();
                 break;
         }
     }

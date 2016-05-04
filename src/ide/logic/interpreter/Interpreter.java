@@ -46,6 +46,10 @@ abstract public class Interpreter {
         return currentCommand.isStop();
     }
 
+    public void reset() {
+        currentCommand = null;
+    }
+
     /**
      * Determines and returns first command of {@code Program}
      *

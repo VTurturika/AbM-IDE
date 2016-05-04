@@ -62,6 +62,12 @@ public class MarkovInterpreter extends Interpreter {
     }
 
     @Override
+    public void reset() {
+        super.reset();
+        hasFinishCommand = false;
+    }
+
+    @Override
     public void setInput(Configuration input) {
         markovString = (MarkovConfiguration) input.getInstance();
     }

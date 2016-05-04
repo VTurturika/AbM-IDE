@@ -83,4 +83,9 @@ public class TuringInterpreter extends Interpreter {
                 break;
         }
     }
+
+    @Override
+    public void reset() {
+        super.reset();
+    }
 }
