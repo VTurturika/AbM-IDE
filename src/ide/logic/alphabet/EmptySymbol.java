@@ -11,6 +11,10 @@ public class EmptySymbol {
         return value;
     }
 
+    public static String getAsString() {
+        return String.valueOf(value);
+    }
+
     public static void set(char c) {
         value = c;
     }

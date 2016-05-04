@@ -1,8 +1,10 @@
 package ide.views;
 
-import ide.views.helpers.CodeAnalyzer;
-import ide.views.helpers.CodeHighlighter;
-import ide.views.urmWidgets.UrmWidgetHelper;
+import ide.logic.interpreter.Configuration;
+import ide.logic.turing.TuringConfiguration;
+import ide.views.helpers.*;
+import ide.views.turingWidgets.*;
+import ide.views.urmWidgets.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -29,12 +31,13 @@ public class MainController implements Initializable {
     private CodeAnalyzer analyzer = new CodeAnalyzer();
 
     private UrmWidgetHelper urmHelper;
+    private TuringWidgetHelper turingHelper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
-        modeSwitcher.setValue("URM");
+        modeSwitcher.setValue("Turing");
         switchIde(null);
 
         loadCodeEditor();
@@ -43,8 +46,11 @@ public class MainController implements Initializable {
     private void loadUrmWidget() {
 
         try {
-            HBox urmWidget = FXMLLoader.load(getClass().getResource("./urmWidgets/urmMain.fxml"));
-            urmHelper = new UrmWidgetHelper(urmWidget);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("./urmWidgets/urmMain.fxml"));
+
+            HBox urmWidget = loader.load();
+            urmHelper = ((UrmWidgetController)loader.getController()).getHelper();
 
             urmHelper.setContainerWidth(urmWidget, configWidget.getPrefWidth() - 100);
             urmWidget.setPrefWidth(configWidget.getPrefWidth());
@@ -59,7 +65,11 @@ public class MainController implements Initializable {
     private void loadTuringWidget() {
 
         try {
-            HBox turingWidget = FXMLLoader.load(getClass().getResource("./turingWidgets/turingTape.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("./turingWidgets/turingTape.fxml"));
+
+            HBox turingWidget = loader.load();
+            turingHelper = ((TuringWidgetController)loader.getController()).getHelper();
 
             HBox cellContainer = (HBox) ((ScrollPane)turingWidget.getChildren().get(1)).getContent();
             cellContainer.setPrefWidth(configWidget.getPrefWidth() - 200);

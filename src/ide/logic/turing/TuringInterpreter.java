@@ -1,5 +1,6 @@
 package ide.logic.turing;
 
+import ide.logic.alphabet.EmptySymbol;
 import ide.logic.interpreter.*;
 
 /**
@@ -68,13 +69,13 @@ public class TuringInterpreter extends Interpreter {
 
             case LEFT:
                 if( !tapeState.hasLeft() ) {
-                    tapeState.insertLeft('$');
+                    tapeState.insertLeft(EmptySymbol.get());
                 }
                 tapeState.moveHeadLeft();
                 break;
             case RIGHT:
                 if( !tapeState.hasRight() ) {
-                    tapeState.insertRight('$');
+                    tapeState.insertRight(EmptySymbol.get());
                 }
                 tapeState.moveHeadRight();
                 break;

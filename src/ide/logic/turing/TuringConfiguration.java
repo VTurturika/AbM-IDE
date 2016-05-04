@@ -1,5 +1,6 @@
 package ide.logic.turing;
 
+import ide.logic.alphabet.EmptySymbol;
 import ide.logic.interpreter.*;
 
 import java.util.LinkedList;
@@ -14,12 +15,10 @@ public class TuringConfiguration extends Configuration {
 
         this.tape = new LinkedList<>();
         this.head = 0;
-        this.tape.add('$');
 
         for (int i = 0; i <tape.length() ; i++) {
             this.tape.add(tape.charAt(i)) ;
         }
-        this.tape.add('$');
 
         this.currentState = 0;
     }
@@ -27,7 +26,7 @@ public class TuringConfiguration extends Configuration {
     public TuringConfiguration() {
 
         this.tape = new LinkedList<>();
-        this.tape.add('$');
+        this.tape.add(EmptySymbol.get());
         this.head = 0;
         this.currentState = 0;
     }
@@ -59,7 +58,7 @@ public class TuringConfiguration extends Configuration {
 
     public void eraseSymbol(){
 
-        tape.set(head, '$');
+        tape.set(head, EmptySymbol.get());
     }
 
     public void insertLeft(char c) {
@@ -78,18 +77,16 @@ public class TuringConfiguration extends Configuration {
 
     public void clearTape() {
         tape.clear();
-        tape.add('$');
+        tape.add(EmptySymbol.get());
         head = 0;
     }
 
     public void setTape(String str) {
 
         tape.clear();
-        tape.add('$');
         for (int i = 0; i <str.length(); i++) {
             this.tape.add(str.charAt(i));
         }
-        tape.add('$');
 
         moveHeadToBegin();
     }
@@ -158,5 +155,13 @@ public class TuringConfiguration extends Configuration {
 
     public void moveHeadToEnd() {
         head = tape.size() - 1;
+    }
+
+    public int getHeadOffset() {
+        return head;
+    }
+
+    public int getLenOfTape() {
+        return tape.size();
     }
 }

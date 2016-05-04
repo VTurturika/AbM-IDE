@@ -2,10 +2,7 @@ package ide.views.urmWidgets;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,4 +37,7 @@ public class UrmWidgetController implements Initializable {
         }
     }
 
+    public UrmWidgetHelper getHelper() {
+        return helper;
+    }
 }
