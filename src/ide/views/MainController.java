@@ -1,6 +1,9 @@
 package ide.views;
 
+import ide.logic.markov.MarkovConfiguration;
 import ide.views.helpers.*;
+import ide.views.markovWidgets.MarkovWidgetController;
+import ide.views.markovWidgets.MarkovWidgetHelper;
 import ide.views.turingWidgets.*;
 import ide.views.urmWidgets.*;
 import javafx.event.ActionEvent;
@@ -30,12 +33,13 @@ public class MainController implements Initializable {
 
     private UrmWidgetHelper urmHelper;
     private TuringWidgetHelper turingHelper;
+    private MarkovWidgetHelper markovHelper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
-        modeSwitcher.setValue("Turing");
+        modeSwitcher.setValue("Markov");
         switchIde(null);
 
         loadCodeEditor();
@@ -82,7 +86,11 @@ public class MainController implements Initializable {
     private void loadMarkovWidget() {
 
         try {
-            VBox markovWidget = FXMLLoader.load(getClass().getResource("./markovWidgets/markovWidget.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("./markovWidgets/markovWidget.fxml"));
+
+            VBox markovWidget = loader.load();
+            markovHelper = ((MarkovWidgetController)loader.getController()).getHelper();
 
             markovWidget.setPrefWidth(configWidget.getPrefWidth());
             configWidget.getChildren().add(markovWidget);
@@ -150,7 +158,6 @@ public class MainController implements Initializable {
 
     @FXML
     private void test(ActionEvent event) {
-
 
     }
 
