@@ -2,62 +2,41 @@ package ide.views.urmWidgets;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UrmWidgetController implements Initializable {
 
-    @FXML HBox registersContainer;
-    private int registersCount = 0;
+    @FXML HBox root;
+    private UrmWidgetHelper helper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        helper = new UrmWidgetHelper(root);
         addRegister(null);
     }
 
     @FXML
     private void addRegister(ActionEvent event) {
-        try {
-            VBox register = FXMLLoader.load(getClass().getResource("./register.fxml"));
 
-            ((Label)register.getChildren().get(1)).setText(String.valueOf(registersCount++));
-
-            TextField registerValue = (TextField) register.getChildren().get(0);
-
-            TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-                String text = change.getText();
-                if (text.matches("[0-9]+")) {
-                    return change;
-                }
-                return null;
-            });
-
-            registerValue.setTextFormatter(textFormatter);
-            registersContainer.getChildren().add(register);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        helper.addRegister();
     }
 
     @FXML
     private void deleteRegister(ActionEvent event) {
-        if(registersCount > 1) {
-            registersContainer.getChildren().remove(--registersCount);
-        }
+        helper.deleteRegister();
     }
 
     @FXML
     private void clearRegisters(ActionEvent event) {
 
-        VBox register;
-
-        for (int i = 0; i< registersCount; i++) {
-              register = (VBox) registersContainer.getChildren().get(i);
-            ((TextField)register.getChildren().get(0)).setText("0");
+        for(int i=0; i<helper.getNumberOfRegisters(); i++) {
+            helper.setRegisterValue(i,0);
         }
     }
 

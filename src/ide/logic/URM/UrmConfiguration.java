@@ -79,6 +79,7 @@ public class UrmConfiguration extends Configuration {
         for(int i : registers){
             result +=( "|" + String.valueOf(i) );
         }
+        if(result.equals("")) result = "| Empty";
         result += "|";
         return result;
     }

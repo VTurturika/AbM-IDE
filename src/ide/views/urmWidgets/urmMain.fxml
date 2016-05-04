@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ide.views.urmWidgets.UrmWidgetController">
+<HBox fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ide.views.urmWidgets.UrmWidgetController">
    <children>
       <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0">
          <children>
@@ -28,7 +28,7 @@
       </VBox>
       <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" vbarPolicy="NEVER" vmax="0.0" HBox.hgrow="ALWAYS">
          <content>
-            <HBox fx:id="registersContainer" prefHeight="150.0" />
+            <HBox prefHeight="150.0" />
          </content>
       </ScrollPane>
    </children>

@@ -2,6 +2,7 @@ package ide.views;
 
 import ide.views.helpers.CodeAnalyzer;
 import ide.views.helpers.CodeHighlighter;
+import ide.views.urmWidgets.UrmWidgetHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -27,6 +28,8 @@ public class MainController implements Initializable {
     private CodeHighlighter highlighter = new CodeHighlighter();
     private CodeAnalyzer analyzer = new CodeAnalyzer();
 
+    private UrmWidgetHelper urmHelper;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -41,11 +44,11 @@ public class MainController implements Initializable {
 
         try {
             HBox urmWidget = FXMLLoader.load(getClass().getResource("./urmWidgets/urmMain.fxml"));
+            urmHelper = new UrmWidgetHelper(urmWidget);
 
-            ScrollPane scrollPane = (ScrollPane) urmWidget.getChildren().get(1);
-            scrollPane.setPrefWidth(configWidget.getPrefWidth() - 100);
-
+            urmHelper.setContainerWidth(urmWidget, configWidget.getPrefWidth() - 100);
             urmWidget.setPrefWidth(configWidget.getPrefWidth());
+
             configWidget.getChildren().add(urmWidget);
         }
         catch (Exception e) {
@@ -144,7 +147,6 @@ public class MainController implements Initializable {
     @FXML
     private void test(ActionEvent event) {
 
-        analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
 
     }
 
