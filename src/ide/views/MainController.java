@@ -1,7 +1,5 @@
 package ide.views;
 
-import ide.logic.interpreter.Configuration;
-import ide.logic.turing.TuringConfiguration;
 import ide.views.helpers.*;
 import ide.views.turingWidgets.*;
 import ide.views.urmWidgets.*;
@@ -71,11 +69,7 @@ public class MainController implements Initializable {
             HBox turingWidget = loader.load();
             turingHelper = ((TuringWidgetController)loader.getController()).getHelper();
 
-            HBox cellContainer = (HBox) ((ScrollPane)turingWidget.getChildren().get(1)).getContent();
-            cellContainer.setPrefWidth(configWidget.getPrefWidth() - 200);
-
-            ScrollPane scrollPane = (ScrollPane)turingWidget.getChildren().get(1);
-            scrollPane.setPrefWidth(configWidget.getPrefWidth() - 190);
+            turingHelper.setContainerWidth(turingWidget, configWidget.getPrefWidth());
             turingWidget.setPrefWidth(configWidget.getPrefWidth());
 
             configWidget.getChildren().add(turingWidget);

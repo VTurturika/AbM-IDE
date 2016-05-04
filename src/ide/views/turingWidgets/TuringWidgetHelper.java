@@ -245,4 +245,16 @@ public class TuringWidgetHelper {
         currentCell = setHead( getCell(headOffset) );
     }
 
+    public void setContainerWidth(HBox root, double width) {
+
+        if(width > 0) {
+
+            HBox cellContainer = (HBox) ((ScrollPane)root.getChildren().get(1)).getContent();
+            cellContainer.setPrefWidth(width - 200);
+
+            ScrollPane scrollPane = (ScrollPane)root.getChildren().get(1);
+            scrollPane.setPrefWidth(width - 190);
+        }
+    }
+
 }
