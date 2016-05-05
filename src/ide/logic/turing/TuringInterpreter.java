@@ -29,6 +29,8 @@ public class TuringInterpreter extends Interpreter {
     @Override
     protected Command getFirstCommand() {
 
+        reset();
+
         if(tapeState == null) {
             return new StopCommand();
         }
@@ -82,10 +84,5 @@ public class TuringInterpreter extends Interpreter {
             case NONE:
                 break;
         }
-    }
-
-    @Override
-    public void reset() {
-        super.reset();
     }
 }

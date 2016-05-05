@@ -186,7 +186,6 @@ public class MainController implements Initializable {
                 updateInput();
 
                 interpreter.runProgram();
-                interpreter.reset();
 
                 updateOutput();
             }

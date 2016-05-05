@@ -44,7 +44,14 @@ public class UrmWidgetHelper {
 
         VBox register = (VBox) viewRegisters.getChildren().get(index);
         TextField registerValue = (TextField)register.getChildren().get(0);
-        registerValue.setText( String.valueOf(value) );
+
+        if(value == -1) {
+            registerValue.setText( "" );
+        }
+        else {
+            registerValue.setText( String.valueOf(value) );
+        }
+
     }
 
     public void addRegister() {
@@ -103,7 +110,6 @@ public class UrmWidgetHelper {
         }
 
         memoryRegisters.setRegisters(registers);
-        System.out.println(memoryRegisters);
     }
 
     public void updateViewRegisters() {

@@ -33,7 +33,7 @@ public class UrmWidgetController implements Initializable {
     private void clearRegisters(ActionEvent event) {
 
         for(int i=0; i<helper.getNumberOfRegisters(); i++) {
-            helper.setRegisterValue(i,0);
+            helper.setRegisterValue(i,-1);
         }
     }
 
