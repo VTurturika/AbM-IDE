@@ -51,7 +51,6 @@ public class UrmWidgetHelper {
         else {
             registerValue.setText( String.valueOf(value) );
         }
-
     }
 
     public void addRegister() {
@@ -110,6 +109,7 @@ public class UrmWidgetHelper {
         }
 
         memoryRegisters.setRegisters(registers);
+        System.out.println(memoryRegisters);
     }
 
     public void updateViewRegisters() {

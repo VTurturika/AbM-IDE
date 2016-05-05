@@ -57,9 +57,9 @@
       </ToolBar>
       <HBox VBox.vgrow="ALWAYS">
          <children>
-            <Pane fx:id="codeEditor" prefHeight="275.0" prefWidth="714.0">
+            <Pane fx:id="codeEditor" prefHeight="266.0" prefWidth="693.0">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
                </HBox.margin></Pane>
          </children>
       </HBox>

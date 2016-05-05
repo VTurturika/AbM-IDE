@@ -2,6 +2,7 @@ package ide.views.markovWidgets;
 
 import ide.logic.markov.MarkovConfiguration;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class MarkovWidgetHelper {
@@ -17,19 +18,28 @@ public class MarkovWidgetHelper {
 
     public String getInputString() {
 
-        return ((TextField)viewString.getChildren().get(1)).getText();
+        HBox inputContainer = (HBox) viewString.getChildren().get(0);
+        TextField inputString = (TextField) inputContainer.getChildren().get(1);
+        return inputString.getText();
     }
 
     public String getOutputString() {
-        return ((TextField)viewString.getChildren().get(3)).getText();
+        HBox outputContainer = (HBox) viewString.getChildren().get(1);
+        TextField outputString = (TextField) outputContainer.getChildren().get(1);
+        return outputString.getText();
     }
 
     public void setInputString(String inputString) {
-        ((TextField)viewString.getChildren().get(1)).setText(inputString);
+
+        HBox inputContainer = (HBox) viewString.getChildren().get(0);
+        TextField stringWidget = (TextField) inputContainer.getChildren().get(1);
+        stringWidget.setText(inputString);
     }
 
     public void setOutputString(String outputString) {
-        ((TextField)viewString.getChildren().get(3)).setText(outputString);
+        HBox outputContainer = (HBox) viewString.getChildren().get(1);
+        TextField stringWidget = (TextField) outputContainer.getChildren().get(1);
+        stringWidget.setText(outputString);
     }
 
     public void updateMemoryString() {
@@ -44,5 +54,19 @@ public class MarkovWidgetHelper {
 
     public MarkovConfiguration getMemoryString() {
         return memoryString;
+    }
+
+    public void setContainerWidth(VBox root, double width) {
+
+        if (width > 0) {
+
+            root.setPrefWidth(width);
+
+            HBox inputContainer = (HBox) root.getChildren().get(0);
+            HBox outputContainer = (HBox) root.getChildren().get(1);
+
+            ((TextField)inputContainer.getChildren().get(1)).setPrefWidth(width - 150);
+            ((TextField)outputContainer.getChildren().get(1)).setPrefWidth(width - 150);
+        }
     }
 }

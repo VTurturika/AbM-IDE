@@ -46,7 +46,7 @@ abstract public class Interpreter {
         return currentCommand.isStop();
     }
 
-    protected void reset() {
+    public void reset() {
         currentCommand = null;
     }
 

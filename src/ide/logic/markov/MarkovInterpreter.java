@@ -24,7 +24,6 @@ public class MarkovInterpreter extends Interpreter {
     @Override
     protected Command getFirstCommand() {
 
-        reset();
         return ( markovString == null ) ? new StopCommand() : nextCommand();
     }
 
@@ -63,7 +62,7 @@ public class MarkovInterpreter extends Interpreter {
     }
 
     @Override
-    protected void reset() {
+    public void reset() {
         super.reset();
         hasFinishCommand = false;
     }

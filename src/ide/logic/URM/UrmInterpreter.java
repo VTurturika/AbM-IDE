@@ -31,7 +31,6 @@ public class UrmInterpreter extends Interpreter {
     @Override
     protected Command getFirstCommand() {
 
-        reset();
         return (registerState != null) ? program.getCommand(index) : new StopCommand();
     }
 
@@ -85,7 +84,7 @@ public class UrmInterpreter extends Interpreter {
     }
 
     @Override
-    protected void reset() {
+    public void reset() {
         super.reset();
 
         index.setIndex(0);

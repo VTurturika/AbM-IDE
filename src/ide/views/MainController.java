@@ -48,7 +48,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
-        modeSwitcher.setValue("URM");
+        modeSwitcher.setValue("Markov");
         switchIde(null);
         loadCodeEditor();
     }
@@ -106,7 +106,8 @@ public class MainController implements Initializable {
             VBox markovWidget = loader.load();
             markovHelper = ((MarkovWidgetController)loader.getController()).getHelper();
 
-            markovWidget.setPrefWidth(configWidget.getPrefWidth());
+            markovHelper.setContainerWidth(markovWidget, configWidget.getPrefWidth());
+
             configWidget.getChildren().add(markovWidget);
 
             interpreter = new MarkovInterpreter();
@@ -186,6 +187,7 @@ public class MainController implements Initializable {
                 updateInput();
 
                 interpreter.runProgram();
+                interpreter.reset();
 
                 updateOutput();
             }
