@@ -61,13 +61,9 @@ public class MarkovInterpreter extends Interpreter {
         }
     }
 
-    @Override
-    protected boolean canExecute() {
-        return (super.program != null && markovString != null);
-    }
 
     @Override
-    protected void reset() {
+    public void reset() {
         super.reset();
         hasFinishCommand = false;
     }
@@ -76,7 +72,7 @@ public class MarkovInterpreter extends Interpreter {
     protected void writeLogs() {
         logger.add("Step: " + getCurrentStep() + "\n" +
                    "Command: " + getCurrentCommand() + "\n" +
-                   "State: " + markovString.toString());
+                   "State: " + markovString.toString() + "\n");
     }
 
     @Override

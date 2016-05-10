@@ -1,25 +1,32 @@
+
 .test, .arrow {
     -fx-fill: blue;
+    -fx-font-weight: bold;
 }
 
 .comment {
     -fx-fill: cadetblue;
+    -fx-font-weight: bold;
 }
 
 .commandNumber {
     -fx-fill: blue;
+    -fx-font-weight: bold;
 }
 
 .commandType, .direction, .emptySymbol, .arrowWithDot {
     -fx-fill: red;
+    -fx-font-weight: bold;
 }
 
 .state {
     -fx-fill: brown;
+    -fx-font-weight: bold;
 }
 
 .symbol {
-    -fx-fill: orange;
+    -fx-fill: darkorange;
+    -fx-font-weight: bold;
 }
 
 .error {
@@ -28,4 +35,8 @@
     -fx-underline: true;
 }
 
+serviceSymbols {
+    -fx-fill: darkmagenta;
+    -fx-font-weight: bold;
+}
 

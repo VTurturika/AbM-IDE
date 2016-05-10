@@ -29,8 +29,9 @@ public class CodeHighlighter {
                                                     COMMENT,TURING_STATE,TURING_DIRECTION,ARROW,EMPTY_SYMBOL,SYMBOL));
 
     private static final String ARROW_WITH_DOT = "(?<arrowWithDot>\\-\\>\\.)";
-    private Pattern markovPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s)",
-                                                   COMMENT,ARROW_WITH_DOT,ARROW,EMPTY_SYMBOL,SYMBOL ));
+    private static final String SERVICE_SYMBOLS = "(?<serviceSymbols>[{}:']|in)";
+    private Pattern markovPattern = Pattern.compile(String.format("(%1$s|%2$s|%3$s|%4$s|%5$s|%6$s)",
+                                                   COMMENT,ARROW_WITH_DOT,ARROW,EMPTY_SYMBOL,SERVICE_SYMBOLS,SYMBOL ));
 
     public void highlightLine(CodeArea code, String type, int lineNumber) {
 
@@ -99,6 +100,7 @@ public class CodeHighlighter {
                        matcher.group("arrowWithDot") != null ? "arrowWithDot" :
                        matcher.group("arrow") != null ? "arrow" :
                        matcher.group("empty") != null ? "emptySymbol" :
+                       matcher.group("serviceSymbols") != null ? "serviceSymbols" :
                        matcher.group("symbol") != null ? "symbol" : null;
             default:
                 return null;

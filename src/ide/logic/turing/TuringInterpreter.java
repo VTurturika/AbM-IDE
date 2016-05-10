@@ -85,12 +85,7 @@ public class TuringInterpreter extends Interpreter {
     }
 
     @Override
-    protected boolean canExecute() {
-        return (super.program != null && tapeState != null);
-    }
-
-    @Override
-    protected void reset() {
+    public void reset() {
         super.reset();
     }
 

@@ -51,7 +51,8 @@
         <items>
           <Button mnemonicParsing="false" onAction="#readFromFile" text="Open" />
           <Button fx:id="runButton" disable="true" mnemonicParsing="false" onAction="#run" text="Run" />
-          <Button fx:id="debugButton" disable="true" mnemonicParsing="false" text="Debug" />
+          <Button fx:id="debugButton" disable="true" mnemonicParsing="false" onAction="#debug" text="Debug" />
+          <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#stop" text="Stop" />
           <ComboBox fx:id="modeSwitcher" onAction="#switchIde" prefWidth="150.0" />
         </items>
       </ToolBar>

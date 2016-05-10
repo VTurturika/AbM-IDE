@@ -11,6 +11,7 @@ import ide.views.urmWidgets.*;
 import ide.views.turingWidgets.*;
 import ide.views.markovWidgets.*;
 
+import javafx.concurrent.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
@@ -34,6 +35,7 @@ public class MainController implements Initializable {
     @FXML ComboBox<String> modeSwitcher;
     @FXML Button runButton;
     @FXML Button debugButton;
+    @FXML Button stopButton;
 
     private CodeArea codeArea = new CodeArea();
     private CodeHighlighter highlighter = new CodeHighlighter();
@@ -48,6 +50,27 @@ public class MainController implements Initializable {
     private Program program = null;
     private boolean canExecute = false;
 
+    private Service<Void> service = new Service<Void>() {
+        @Override
+        protected Task<Void> createTask() {
+            return new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+
+                    interpreter.runProgram();
+
+                    if(interpreter.isInterrupted()) {
+                        logsController.setLogs("Execution interrupted");
+                        reset();
+                    }
+
+                    return null;
+                }
+            };
+        }
+    };
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -56,6 +79,11 @@ public class MainController implements Initializable {
         switchIde(null);
         loadCodeEditor();
         loadLogWidget();
+
+        service.setOnSucceeded(event -> {
+            logsController.setLogs(interpreter.getLogger().toString());
+            updateOutput();
+        });
     }
 
     private void loadUrmWidget() {
@@ -130,6 +158,8 @@ public class MainController implements Initializable {
         codeArea.setPrefHeight(codeEditor.getPrefHeight());
        // codeArea.setPadding(new Insets(0,0,0,20));
 
+        codeArea.appendText("j(0,0,1)");
+
         codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue  == 0) {
                 canExecute = false;
@@ -145,7 +175,6 @@ public class MainController implements Initializable {
 
             controlButtons();
         });
-
 
         codeEditor.getChildren().add(codeArea);
     }
@@ -218,16 +247,24 @@ public class MainController implements Initializable {
 
                 interpreter.loadProgram(program);
                 updateInput();
+                service.reset();
+                service.start();
 
-                interpreter.runProgram();
-                logsController.setLogs(interpreter.getLogger().toString());
-
-                updateOutput();
             }
             else {
                 System.out.println("wrong program");
             }
         }
+    }
+
+    @FXML
+    private void debug(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void stop(ActionEvent event) {
+        interpreter.stop();
     }
 
     @FXML
@@ -256,10 +293,12 @@ public class MainController implements Initializable {
         if(canExecute) {
             runButton.setDisable(false);
             debugButton.setDisable(false);
+            stopButton.setDisable(false);
         }
         else {
             runButton.setDisable(true);
             debugButton.setDisable(true);
+            stopButton.setDisable(true);
         }
     }
 

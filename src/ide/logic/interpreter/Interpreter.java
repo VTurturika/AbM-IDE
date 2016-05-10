@@ -5,10 +5,11 @@ package ide.logic.interpreter;
  */
 abstract public class Interpreter {
 
-    private Command currentCommand;
+    private Command currentCommand = new StopCommand();
     protected Program program;
     protected Logger logger = new Logger();
     private int stepCounter = 1;
+    private volatile boolean isInterrupt = false;
 
     /**
      * Begins execution of current program by {@code Interpreter}
@@ -16,16 +17,15 @@ abstract public class Interpreter {
     public void runProgram() {
 
         reset();
-        if(canExecute()) {
+        currentCommand = getFirstCommand();
+        while (!isInterrupt && !isStop()) {
 
-            currentCommand = getFirstCommand();
-            while (!isStop()) {
+            execute(currentCommand);
+            writeLogs();
+            currentCommand = nextCommand();
+            stepCounter++;
 
-                execute(currentCommand);
-                writeLogs();
-                currentCommand = nextCommand();
-                stepCounter++;
-            }
+            System.out.println("running");
         }
     }
 
@@ -36,6 +36,14 @@ abstract public class Interpreter {
      */
     public void loadProgram(Program program) {
         this.program = program;
+    }
+
+    public void stop() {
+      isInterrupt = true;
+    }
+
+    public boolean isInterrupted() {
+        return isInterrupt;
     }
 
     /**
@@ -54,8 +62,9 @@ abstract public class Interpreter {
         return currentCommand.isStop();
     }
 
-    protected void reset() {
+    public void reset() {
         currentCommand = null;
+        isInterrupt = false;
         stepCounter = 1;
         logger.clear();
     }
@@ -72,9 +81,6 @@ abstract public class Interpreter {
         return stepCounter;
     }
 
-    protected boolean canExecute() {
-        return (program != null && currentCommand != null);
-    }
     /**
      * Determines and returns first command of {@code Program}
      *

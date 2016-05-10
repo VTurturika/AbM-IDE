@@ -82,12 +82,7 @@ public class UrmInterpreter extends Interpreter {
     }
 
     @Override
-    protected boolean canExecute() {
-        return (super.program != null && registerState != null);
-    }
-
-    @Override
-    protected void reset() {
+    public void reset() {
         super.reset();
 
         index.setIndex(0);
