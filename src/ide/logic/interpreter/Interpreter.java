@@ -7,17 +7,25 @@ abstract public class Interpreter {
 
     private Command currentCommand;
     protected Program program;
+    protected Logger logger = new Logger();
+    private int stepCounter = 1;
 
     /**
      * Begins execution of current program by {@code Interpreter}
      */
     public void runProgram() {
 
-        currentCommand = getFirstCommand();
-        while (!isStop()) {
+        reset();
+        if(canExecute()) {
 
-            execute(currentCommand);
-            currentCommand = nextCommand();
+            currentCommand = getFirstCommand();
+            while (!isStop()) {
+
+                execute(currentCommand);
+                writeLogs();
+                currentCommand = nextCommand();
+                stepCounter++;
+            }
         }
     }
 
@@ -46,10 +54,27 @@ abstract public class Interpreter {
         return currentCommand.isStop();
     }
 
-    public void reset() {
+    protected void reset() {
         currentCommand = null;
+        stepCounter = 1;
+        logger.clear();
     }
 
+    public Command getCurrentCommand() {
+        return currentCommand;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    protected int getCurrentStep() {
+        return stepCounter;
+    }
+
+    protected boolean canExecute() {
+        return (program != null && currentCommand != null);
+    }
     /**
      * Determines and returns first command of {@code Program}
      *
@@ -69,4 +94,6 @@ abstract public class Interpreter {
      * @param c {@code Command} that will be executed
      */
     abstract protected void execute(Command c);
+
+    abstract protected void writeLogs();
 }

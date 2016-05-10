@@ -6,12 +6,14 @@ import ide.logic.turing.*;
 import ide.logic.markov.*;
 
 import ide.views.helpers.*;
+import ide.views.logsWidget.LogsWidgetController;
 import ide.views.urmWidgets.*;
 import ide.views.turingWidgets.*;
 import ide.views.markovWidgets.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
@@ -28,6 +30,7 @@ public class MainController implements Initializable {
 
     @FXML Pane configWidget;
     @FXML Pane codeEditor;
+    @FXML Pane logsConsole;
     @FXML ComboBox<String> modeSwitcher;
     @FXML Button runButton;
     @FXML Button debugButton;
@@ -39,6 +42,7 @@ public class MainController implements Initializable {
     private UrmWidgetHelper urmHelper;
     private TuringWidgetHelper turingHelper;
     private MarkovWidgetHelper markovHelper;
+    private LogsWidgetController logsController;
 
     private Interpreter interpreter = null;
     private Program program = null;
@@ -48,9 +52,10 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
-        modeSwitcher.setValue("Markov");
+        modeSwitcher.setValue("URM");
         switchIde(null);
         loadCodeEditor();
+        loadLogWidget();
     }
 
     private void loadUrmWidget() {
@@ -123,13 +128,14 @@ public class MainController implements Initializable {
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.setPrefWidth(codeEditor.getPrefWidth());
         codeArea.setPrefHeight(codeEditor.getPrefHeight());
+       // codeArea.setPadding(new Insets(0,0,0,20));
 
         codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
-            if( newValue - oldValue > 1 ) {
+            if( newValue - oldValue > 1 || newValue - oldValue < 1) {
                 highlighter.highlightAllCode(codeArea, modeSwitcher.getValue());
                 canExecute = analyzer.analyzeAllCode(codeArea, modeSwitcher.getValue()) != null;
             }
-            else if( newValue - oldValue <= 1 ) {
+            else if( newValue - oldValue == 1 ) {
                 highlighter.highlightLine(codeArea, modeSwitcher.getValue());
                 canExecute  = analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
             }
@@ -140,6 +146,27 @@ public class MainController implements Initializable {
         codeEditor.getChildren().add(codeArea);
     }
 
+    private void loadLogWidget() {
+
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("./logsWidget/logsWidget.fxml"));
+
+            VBox logsWidget = loader.load();
+            logsWidget.setPrefWidth(logsConsole.getPrefWidth());
+
+
+            logsController = (LogsWidgetController) loader.getController();
+            logsConsole.getChildren().add(logsWidget);
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @FXML
     private void readFromFile(ActionEvent event) {
 
@@ -147,6 +174,8 @@ public class MainController implements Initializable {
         Stage stage = (Stage) codeEditor.getScene().getWindow();
 
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt"));
+
         File file = fileChooser.showOpenDialog(stage);
 
         if(file != null) {
@@ -187,7 +216,7 @@ public class MainController implements Initializable {
                 updateInput();
 
                 interpreter.runProgram();
-                interpreter.reset();
+                logsController.setLogs(interpreter.getLogger().toString());
 
                 updateOutput();
             }
@@ -203,6 +232,8 @@ public class MainController implements Initializable {
         configWidget.getChildren().clear();
         codeArea.clear();
         canExecute = false;
+
+        if(logsController != null) logsController.clear();
 
         switch (modeSwitcher.getValue()) {
             case "URM":

@@ -79,15 +79,25 @@ public class UrmInterpreter extends Interpreter {
             default:
                 throw new RuntimeException("Wrong type of command");
         }
-
-        //System.out.println(registerState);
     }
 
     @Override
-    public void reset() {
+    protected boolean canExecute() {
+        return (super.program != null && registerState != null);
+    }
+
+    @Override
+    protected void reset() {
         super.reset();
 
         index.setIndex(0);
         hasNextCommand = false;
+    }
+
+    @Override
+    protected void writeLogs() {
+        logger.add("Step: " + getCurrentStep() + "\n" +
+                "Command: " + getCurrentCommand() + "\n" +
+                "State: " + registerState.toString());
     }
 }

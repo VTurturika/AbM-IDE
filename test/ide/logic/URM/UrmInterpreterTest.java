@@ -35,6 +35,8 @@ public class UrmInterpreterTest {
         System.out.println(urmConfiguration.getRegister(0));
 
         assertEquals(urmConfiguration.getRegister(0), 4);
+
+        System.out.println(interpreter.getLogger());
     }
 
 }

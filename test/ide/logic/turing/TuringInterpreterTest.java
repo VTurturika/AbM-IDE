@@ -35,6 +35,6 @@ public class TuringInterpreterTest {
 
         interpreter.runProgram();
 
-        System.out.println(turingConfiguration);
+        System.out.println(interpreter.getLogger());
     }
 }

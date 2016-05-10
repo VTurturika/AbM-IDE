@@ -24,6 +24,6 @@ public class MarkovInterpreterTest {
         interpreter.loadProgram(program);
         interpreter.runProgram();
 
-        System.out.println(markovConfiguration);
+        System.out.println(interpreter.getLogger());
     }
 }
