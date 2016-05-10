@@ -19,7 +19,7 @@ public class SimpleMarkovFileParser extends SimpleFileParser {
     public SimpleMarkovFileParser(String filename) {
         super(filename);
         this.commandPattern = Pattern.compile(
-                String.format("(?<command>%1$s(\\s*%2$s)?)|(?<comment>%2$s)", markovCommand, comment));
+                String.format("(?<command>\\s*%1$s(\\s*%2$s)?\\s*)|(?<comment>\\s*%2$s)", markovCommand, comment));
         this.program = new MarkovProgram();
     }
 
@@ -30,15 +30,28 @@ public class SimpleMarkovFileParser extends SimpleFileParser {
     @Override
     public Command parseCommand(String str) throws Exception {
 
-        Matcher matcher = commandPattern.matcher(str);
-        if (matcher.find()) {
+        Matcher matcher;
+        String commandPart, definitionPart = "";
+
+        if(parser.hasTemplateSymbolDefinition(str)) {
+
+            int indexOfDefinition = parser.findStartOfTemplateSymbolDefinition(str);
+            commandPart = str.substring(0, indexOfDefinition);
+            definitionPart = str.substring(indexOfDefinition);
+            matcher = commandPattern.matcher(commandPart);
+        }
+        else {
+            matcher = commandPattern.matcher(str);
+        }
+
+        if (matcher.matches()) {
 
             if (matcher.group("command") != null) {
                 String pattern = matcher.group(2);
                 String replacement = matcher.group(4);
                 boolean isFinishCommand = (matcher.group(3) != null);
 
-                if (parser.hasTemplateSymbolDefinition(str)) {
+                if (!definitionPart.equals("")) {
 
                     TemplateSymbol[] symbols;
                     if(parser.hasMoreOneTemplateSymbol(str)) {

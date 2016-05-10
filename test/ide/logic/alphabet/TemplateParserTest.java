@@ -94,4 +94,16 @@ public class TemplateParserTest {
         assertFalse(parser.hasMoreOneTemplateSymbol("x in {'b'}"));
 
     }
+
+    @Test
+    public void findStartOfTemplateSymbolDefinition() throws Exception {
+
+        TemplateParser parser = new TemplateParser();
+
+        assertEquals(0, parser.findStartOfTemplateSymbolDefinition(": x in {'a'}"));
+        assertEquals(1, parser.findStartOfTemplateSymbolDefinition(" : x in {'a'}"));
+        assertEquals(-1, parser.findStartOfTemplateSymbolDefinition("qwerty"));
+
+
+    }
 }

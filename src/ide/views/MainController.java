@@ -131,7 +131,10 @@ public class MainController implements Initializable {
        // codeArea.setPadding(new Insets(0,0,0,20));
 
         codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
-            if( newValue - oldValue > 1 || newValue - oldValue < 1) {
+            if(newValue  == 0) {
+                canExecute = false;
+            }
+            else if( newValue - oldValue > 1) {
                 highlighter.highlightAllCode(codeArea, modeSwitcher.getValue());
                 canExecute = analyzer.analyzeAllCode(codeArea, modeSwitcher.getValue()) != null;
             }
@@ -139,6 +142,7 @@ public class MainController implements Initializable {
                 highlighter.highlightLine(codeArea, modeSwitcher.getValue());
                 canExecute  = analyzer.analyzeCode(codeArea, modeSwitcher.getValue());
             }
+
             controlButtons();
         });
 

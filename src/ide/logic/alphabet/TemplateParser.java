@@ -36,6 +36,21 @@ public class TemplateParser {
     private static final String correctDefinition =
             String.format(":\\s%1$s(\\,\\s?%1$s)*", simpleDefinition);
 
+    public String getTemplateSymbolDefinition() {
+        return correctDefinition;
+    }
+
+    public int findStartOfTemplateSymbolDefinition(String str) {
+
+        Matcher matcher = Pattern.compile(correctDefinition).matcher(str);
+
+        if (matcher.find() ) {
+            return matcher.start();
+        }
+        else {
+            return -1;
+        }
+    }
     /**
      * Checks if specified string is correct set definition
      *
@@ -46,6 +61,7 @@ public class TemplateParser {
 
         return Pattern.compile(correctSet).matcher(stringSet).find();
     }
+
 
     /**
      * Checks if specified string is {@code TemplateSymbol} definition

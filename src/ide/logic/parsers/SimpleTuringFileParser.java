@@ -14,7 +14,7 @@ public class SimpleTuringFileParser extends SimpleFileParser {
     public SimpleTuringFileParser(String filename) {
         super(filename);
         this.commandPattern = Pattern.compile(
-                              String.format("(?<command>%1$s(\\s*%2$s)?)|(?<comment>%2$s)", turingCommand, comment));
+                              String.format("\\s*(?<command>%1$s(\\s*%2$s)?\\s*)|(?<comment>%2$s)", turingCommand, comment));
         this.program = new TuringProgram();
     }
 
@@ -25,7 +25,7 @@ public class SimpleTuringFileParser extends SimpleFileParser {
     @Override
     public Command parseCommand(String str) {
         Matcher matcher = commandPattern.matcher(str);
-        if(matcher.find()) {
+        if(matcher.matches()) {
 
             if(matcher.group("command") != null ) {
 

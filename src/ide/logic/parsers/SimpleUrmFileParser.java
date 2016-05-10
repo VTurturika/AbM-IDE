@@ -9,12 +9,13 @@ import java.util.regex.Pattern;
 public class SimpleUrmFileParser extends SimpleFileParser {
 
     private final static String urmCommand =
-    "((\\d+)[\\)\\.])?\\s*([zZsStTjJ])\\s?\\(\\s?(\\d+)\\s?(\\,\\s?(\\d+)\\s?)?(\\,\\s?(\\d+)\\s?)?\\)";
+    "([zZsStTjJ])\\s?\\(\\s?(\\d+)\\s?(\\,\\s?(\\d+)\\s?)?(\\,\\s?(\\d+)\\s?)?\\)";
 
     public SimpleUrmFileParser(String filename) {
         super(filename);
         this.commandPattern = Pattern.compile(
-                              String.format("(?<command>%1$s(\\s*%2$s)?)|(?<comment>%2$s)", urmCommand, comment));
+                              String.format("\\s*(\\d+[\\)\\.])?\\s*(?<command>%1$s(\\s*%2$s)?\\s*)|(?<comment>%2$s)",
+                                            urmCommand, comment));
         this.program = new UrmProgram();
     }
 
@@ -25,14 +26,14 @@ public class SimpleUrmFileParser extends SimpleFileParser {
     public Command parseCommand(String str) {
 
         Matcher matcher = commandPattern.matcher(str);
-        if(matcher.find()) {
+        if(matcher.matches()) {
 
             if(matcher.group("command") != null && matcher.group(2) != null) {
 
-                String type = matcher.group(4).toLowerCase();
-                int firstArgument  = createArgument(matcher.group(5));
-                int secondArgument = createArgument(matcher.group(7));
-                int thirdArgument  = createArgument(matcher.group(9));
+                String type = matcher.group(3).toLowerCase();
+                int firstArgument  = createArgument(matcher.group(4));
+                int secondArgument = createArgument(matcher.group(6));
+                int thirdArgument  = createArgument(matcher.group(8));
 
                 return new UrmCommand(type, firstArgument, secondArgument, thirdArgument);
             }
