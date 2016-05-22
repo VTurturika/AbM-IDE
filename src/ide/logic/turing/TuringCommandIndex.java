@@ -8,7 +8,7 @@ import ide.logic.interpreter.CommandIndex;
 public class TuringCommandIndex extends CommandIndex {
 
     /**
-     * Allows get gCommand from Program using state and symbol of tape
+     * Allows get Command from Program using state and symbol of tape
      */
     private int state;
     private char symbol;

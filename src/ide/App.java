@@ -3,6 +3,7 @@ package ide;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,6 +26,7 @@ public class App extends Application {
         mainScene.getStylesheets().add("file://" + getClass().getResource("./views/styles.css").getPath());
 
         primaryStage.setScene(mainScene);
+        primaryStage.setTitle("AbM IDE - Abstract Machines IDE");
         primaryStage.setResizable(false);
         primaryStage.show();
     }

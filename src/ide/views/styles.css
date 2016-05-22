@@ -1,4 +1,3 @@
-
 .test, .arrow {
     -fx-fill: blue;
     -fx-font-weight: bold;
@@ -7,6 +6,23 @@
 .comment {
     -fx-fill: cadetblue;
     -fx-font-weight: bold;
+}
+
+.lineNumber {
+    -fx-fill: "#eee";
+    -fx-background-color: "#ddd";
+    -fx-font-family: monospace;
+}
+
+.breakpoint {
+    -fx-background-color: red;
+}
+
+
+.debug {
+    -fx-font-weight: bold;
+    -fx-fill: darkblue;
+    -fx-underline: true;
 }
 
 .commandNumber {
@@ -39,4 +55,3 @@ serviceSymbols {
     -fx-fill: darkmagenta;
     -fx-font-weight: bold;
 }
-

@@ -15,8 +15,12 @@ import javafx.concurrent.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.*;
@@ -25,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -37,10 +42,11 @@ public class MainController implements Initializable {
     @FXML Button debugButton;
     @FXML Button stopButton;
 
-    private CodeArea codeArea = new CodeArea();
+    private CodeArea codeArea;
     private CodeHighlighter highlighter = new CodeHighlighter();
     private CodeAnalyzer analyzer = new CodeAnalyzer();
 
+    private CodeEditorHelper codeEditorHelper = new CodeEditorHelper();
     private UrmWidgetHelper urmHelper;
     private TuringWidgetHelper turingHelper;
     private MarkovWidgetHelper markovHelper;
@@ -63,7 +69,6 @@ public class MainController implements Initializable {
                         logsController.setLogs("Execution interrupted");
                         reset();
                     }
-
                     return null;
                 }
             };
@@ -74,11 +79,12 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        loadCodeEditor();
+        loadLogWidget();
+
         modeSwitcher.getItems().addAll("URM", "Turing", "Markov");
         modeSwitcher.setValue("URM");
         switchIde(null);
-        loadCodeEditor();
-        loadLogWidget();
 
         service.setOnSucceeded(event -> {
             logsController.setLogs(interpreter.getLogger().toString());
@@ -153,12 +159,8 @@ public class MainController implements Initializable {
 
     private void loadCodeEditor() {
 
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-        codeArea.setPrefWidth(codeEditor.getPrefWidth());
-        codeArea.setPrefHeight(codeEditor.getPrefHeight());
-       // codeArea.setPadding(new Insets(0,0,0,20));
-
-        codeArea.appendText("j(0,0,1)");
+        codeArea = codeEditorHelper.getCodeEditor();
+        codeEditorHelper.setWidthAndHeight(codeEditor);
 
         codeArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue  == 0) {

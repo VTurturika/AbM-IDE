@@ -14,7 +14,7 @@ public class SimpleUrmFileParser extends SimpleFileParser {
     public SimpleUrmFileParser(String filename) {
         super(filename);
         this.commandPattern = Pattern.compile(
-                              String.format("\\s*(\\d+[\\)\\.])?\\s*(?<command>%1$s(\\s*%2$s)?\\s*)|(?<comment>%2$s)",
+                              String.format("\\s*(\\d+[\\)\\.])?\\s*(?<command>%1$s(\\s*%2$s)?\\s*)|(?<comment>\\s*%2$s)",
                                             urmCommand, comment));
         this.program = new UrmProgram();
     }

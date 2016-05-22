@@ -24,8 +24,6 @@ abstract public class Interpreter {
             writeLogs();
             currentCommand = nextCommand();
             stepCounter++;
-
-            System.out.println("running");
         }
     }
 

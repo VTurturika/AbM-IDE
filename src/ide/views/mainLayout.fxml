@@ -26,6 +26,10 @@
             <MenuItem mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
+        <Menu mnemonicParsing="false" text="Debug">
+          <items>
+          </items>
+        </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
             <MenuItem mnemonicParsing="false" text="Undo" />
@@ -56,12 +60,11 @@
           <ComboBox fx:id="modeSwitcher" onAction="#switchIde" prefWidth="150.0" />
         </items>
       </ToolBar>
-      <HBox spacing="5.0" VBox.vgrow="ALWAYS">
+      <HBox prefHeight="270.0" spacing="5.0" VBox.vgrow="ALWAYS">
          <children>
-            <Pane fx:id="codeEditor" prefHeight="266.0" prefWidth="400.0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin></Pane>
+            <Pane fx:id="codeEditor" prefHeight="270.0" prefWidth="400.0">
+
+            </Pane>
             <Pane fx:id="logsConsole" prefHeight="200.0" prefWidth="290.0" />
          </children>
          <padding>
