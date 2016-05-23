@@ -52,7 +52,8 @@ public class TuringInterpreter extends Interpreter {
             index.setSymbol(tapeState.getSymbol());
             index.setState(currentState);
 
-            return program.getCommand(index);
+            Command result = program.getCommand(index);
+            return result == null ? new StopCommand() : result;
         }
     }
 

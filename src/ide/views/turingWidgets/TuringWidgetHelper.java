@@ -5,13 +5,17 @@ import ide.logic.turing.TuringConfiguration;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
 
 public class TuringWidgetHelper {
 
@@ -19,6 +23,7 @@ public class TuringWidgetHelper {
     private HBox viewTape;
     private int indexOfCurrentCell = 0;
     private VBox currentCell;
+    private String tapeState  = "";
 
     public TuringWidgetHelper(HBox root) {
 
@@ -87,14 +92,24 @@ public class TuringWidgetHelper {
     private VBox setHead(VBox cell) {
 
         cell.setAlignment(Pos.TOP_CENTER);
-        cell.setPadding(new Insets(14,0,14,0));
+        cell.setPadding(new Insets(4,0,14,0));
 
-        Polygon upperTriangle = new Polygon(10,0,30,15,10,30);
-        upperTriangle.rotateProperty().set(90);
-        cell.getChildren().add(0, upperTriangle);
+        Polygon upperTriangle = new Polygon(0,20, 40,20, 20,30);
 
-        Polygon lowerTriangle = new Polygon(10,0,30,15,10,30);
-        lowerTriangle.rotateProperty().set(270);
+        TextField state = new TextField();
+        state.setMaxWidth(40);
+        state.setAlignment(Pos.CENTER);
+        if(currentCell == null || tapeState.equals("")) {
+            state.setPromptText("0");
+        }
+        else {
+           state.setText(tapeState);
+        }
+
+        cell.getChildren().add(0, state);
+        cell.getChildren().add(1, upperTriangle);
+
+        Polygon lowerTriangle = new Polygon(0,30, 20,0, 40,30);
         cell.getChildren().add(lowerTriangle);
 
         return cell;
@@ -110,6 +125,10 @@ public class TuringWidgetHelper {
 
             currentCell.setAlignment(Pos.CENTER);
             currentCell.setPadding(new Insets(5,0,5,0));
+
+            tapeState = ((TextField)currentCell.getChildren().get(0)).getText();
+
+            currentCell.getChildren().remove(0);
             currentCell.getChildren().remove(0);
             currentCell.getChildren().remove(1);
         }
@@ -177,7 +196,7 @@ public class TuringWidgetHelper {
 
             VBox cell = getCell(index);
 
-            int cellValueIndex = (cell.getChildren().size() > 1 ) ? 1 : 0;
+            int cellValueIndex = (cell.getChildren().size() > 1 ) ? 2 : 0;
 
             TextField cellValue = (TextField) cell.getChildren().get(cellValueIndex);
             return cellValue.getText().equals("") ? EmptySymbol.get() : cellValue.getText().charAt(0);
@@ -194,12 +213,40 @@ public class TuringWidgetHelper {
 
             VBox cell = getCell(index);
 
-            int cellValueIndex = (cell.getChildren().size() > 1 ) ? 1 : 0;
+            int cellValueIndex = (cell.getChildren().size() > 1 ) ? 2 : 0;
 
             TextField cellValue = (TextField) cell.getChildren().get(cellValueIndex);
             cellValue.setText(String.valueOf(value));
         }
     }
+
+    public int getTapeState() {
+
+        TextField state = (TextField) currentCell.getChildren().get(0);
+
+        if (state.getText().length() == 0 ) {
+            return 0;
+        }
+        else if (state.getText().equals("*")) {
+            return -1;
+        }
+        else {
+            return Integer.parseInt(state.getText());
+        }
+    }
+
+    public void setTapeState(int tapeState) {
+
+        TextField state = (TextField) currentCell.getChildren().get(0);
+
+        if(tapeState == -1) {
+            state.setText("*");
+        }
+        else {
+            state.setText(String.valueOf(tapeState));
+        }
+    }
+
 
     public void updateMemoryTape() {
 
@@ -214,6 +261,8 @@ public class TuringWidgetHelper {
         for (int i = 0; i <indexOfCurrentCell  ; i++) {
             memoryTape.moveHeadRight();
         }
+
+        memoryTape.setState( getTapeState() );
     }
 
     public void updateViewTape() {
@@ -243,6 +292,7 @@ public class TuringWidgetHelper {
 
         clearHead();
         currentCell = setHead( getCell(headOffset) );
+        setTapeState( memoryTape.getState() );
     }
 
     public void setContainerWidth(HBox root, double width) {
