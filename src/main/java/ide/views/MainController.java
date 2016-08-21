@@ -14,13 +14,8 @@ import ide.views.markovWidgets.*;
 import javafx.concurrent.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.*;
@@ -29,7 +24,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -96,7 +90,7 @@ public class MainController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("./urmWidgets/urmMain.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/widgets/urm/urmMain.fxml"));
 
             HBox urmWidget = loader.load();
             urmHelper = ((UrmWidgetController)loader.getController()).getHelper();
@@ -118,7 +112,7 @@ public class MainController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("./turingWidgets/turingTape.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/widgets/turing/turingTape.fxml"));
 
             HBox turingWidget = loader.load();
             turingHelper = ((TuringWidgetController)loader.getController()).getHelper();
@@ -140,7 +134,7 @@ public class MainController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("./markovWidgets/markovWidget.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/widgets/markov/markovWidget.fxml"));
 
             VBox markovWidget = loader.load();
             markovHelper = ((MarkovWidgetController)loader.getController()).getHelper();
@@ -185,11 +179,10 @@ public class MainController implements Initializable {
 
         try{
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("./logsWidget/logsWidget.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/widgets/logsWidget.fxml"));
 
             VBox logsWidget = loader.load();
             logsWidget.setPrefWidth(logsConsole.getPrefWidth());
-
 
             logsController = (LogsWidgetController) loader.getController();
             logsConsole.getChildren().add(logsWidget);

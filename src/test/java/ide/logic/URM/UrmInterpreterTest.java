@@ -16,7 +16,7 @@ public class UrmInterpreterTest {
 
         SimpleFileParser parser = new SimpleUrmFileParser();
 
-        parser.setFilename(getClass().getResource("./programs/test1.txt").getPath());
+        parser.setFilename(getClass().getResource("/test/urm/test1.txt").getPath());
         Program program = parser.getProgram();
 
         Configuration configuration = new UrmConfiguration(6);
@@ -36,7 +36,7 @@ public class UrmInterpreterTest {
 
         assertEquals(urmConfiguration.getRegister(0), 4);
 
-        System.out.println(interpreter.getLogger());
+        //System.out.println(interpreter.getLogger());
     }
 
 }

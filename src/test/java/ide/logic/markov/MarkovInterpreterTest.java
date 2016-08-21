@@ -12,7 +12,7 @@ public class MarkovInterpreterTest {
 
         SimpleFileParser parser = new SimpleMarkovFileParser();
 
-        parser.setFilename(System.getProperty("user.dir") + "\\test\\ide\\logic\\markov\\programs\\test6.txt");
+        parser.setFilename(getClass().getResource("/test/markov/test6.txt").getPath());
         Program program = parser.getProgram();
 
         Configuration configuration = new MarkovConfiguration();
@@ -24,6 +24,6 @@ public class MarkovInterpreterTest {
         interpreter.loadProgram(program);
         interpreter.runProgram();
 
-        System.out.println(interpreter.getLogger());
+       // System.out.println(interpreter.getLogger());
     }
 }

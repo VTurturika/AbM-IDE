@@ -1,15 +1,11 @@
 package ide.logic.turing;
 
 
-import ide.logic.URM.UrmConfiguration;
-import ide.logic.URM.UrmInterpreter;
-import ide.logic.alphabet.EmptySymbol;
 import ide.logic.interpreter.Configuration;
 import ide.logic.interpreter.Interpreter;
 import ide.logic.interpreter.Program;
 import ide.logic.parsers.SimpleFileParser;
 import ide.logic.parsers.SimpleTuringFileParser;
-import ide.logic.parsers.SimpleUrmFileParser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +17,7 @@ public class TuringInterpreterTest {
 
         SimpleFileParser parser = new SimpleTuringFileParser();
 
-        parser.setFilename(getClass().getResource("./programs/test3.txt").getPath());
+        parser.setFilename(getClass().getResource("/test/turing/test3.txt").getPath());
         Program program = parser.getProgram();
 
         Configuration configuration = new TuringConfiguration("||");
@@ -35,6 +31,6 @@ public class TuringInterpreterTest {
 
         interpreter.runProgram();
 
-        System.out.println(interpreter.getLogger());
+        //System.out.println(interpreter.getLogger());
     }
 }

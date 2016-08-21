@@ -1,7 +1,7 @@
 package ide.logic.alphabet;
 
 /**
- * Represents "template symbol" for ide.logic.markov Algorithms command
+ * Represents "template symbol" for ide.logic.test.markov Algorithms command
  */
 public class TemplateSymbol {
 

@@ -55,7 +55,7 @@ public class UrmWidgetHelper {
 
     public void addRegister() {
         try {
-            VBox register = FXMLLoader.load(getClass().getResource("./register.fxml"));
+            VBox register = FXMLLoader.load(getClass().getResource("/fxml/widgets/urm/register.fxml"));
 
             ((Label)register.getChildren().get(1)).setText(String.valueOf(getNumberOfRegisters()));
 

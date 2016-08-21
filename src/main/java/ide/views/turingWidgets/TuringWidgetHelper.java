@@ -5,17 +5,13 @@ import ide.logic.turing.TuringConfiguration;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 
 public class TuringWidgetHelper {
 
@@ -33,7 +29,7 @@ public class TuringWidgetHelper {
 
     public void addCellRight() {
         try {
-            VBox cell = FXMLLoader.load(getClass().getResource("./cell.fxml"));
+            VBox cell = FXMLLoader.load(getClass().getResource("/fxml/widgets/turing/cell.fxml"));
             ((TextField)cell.getChildren().get(0)).setPromptText(EmptySymbol.getAsString());
 
            cell.setOnMouseClicked(e -> {
@@ -62,7 +58,7 @@ public class TuringWidgetHelper {
     public void addCellLeft() {
 
         try {
-            VBox cell = FXMLLoader.load(getClass().getResource("./cell.fxml"));
+            VBox cell = FXMLLoader.load(getClass().getResource("/fxml/widgets/turing/cell.fxml"));
             ((TextField)cell.getChildren().get(0)).setPromptText(EmptySymbol.getAsString());
 
            cell.setOnMouseClicked(e -> {
